@@ -18,6 +18,14 @@ class Resident:
         self.name = name
         self.location = Location.HOME
 
+    def move_location(location: 'Location') -> bool:
+        if location is self.location:
+            return False
+        else:
+            self.location = location
+            #invoke movement?
+            return True
+
 
 class Board:
     residents: 'set[Resident]'
@@ -27,7 +35,6 @@ class Board:
     def __init__():
         self.io = pigpio.pi()
 
-    def __GPIOSetup(pin):
         
 
 
