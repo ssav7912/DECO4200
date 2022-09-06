@@ -75,7 +75,8 @@ class Board:
                 self.manifest.add(id)
                 resident = Resident(id, "placeholder")
                 self.residents.append(resident)
-                self.move_location(resident, Location.fromString(location))
+                if len(residents) < len(self.move_location):
+                    self.move_location(resident, Location.fromString(location))
 
 
             elif id in self.manifest:
