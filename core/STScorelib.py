@@ -59,9 +59,11 @@ class ResidentDecoder(json.JSONDecoder):
     def decode(self, s: 'str') -> 'Resident':
         obj = json.loads(s)
 
-        fields = {"id", "name"}
+        fields = {"id", "name", "location"}
 
         if any(field not in obj.keys() for field in fields):
             raise json.JSONDecodeError("Not an appropriate Resident object for this decoder", s) 
 
-        return Resident(obj["id"], obj["name"])
+        resident = Resident(obj["id"], obj["name"])
+        resident.location = Location.fromString(obj["location"])
+        return resident

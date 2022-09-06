@@ -115,7 +115,7 @@ class MyServer(SimpleHTTPRequestHandler):
         if all(person.id != resident.id for resident in self.manifest):
             self.manifest.add(person)
         else:
-            resident = self.manifest.getResidentById(person.id)
+            resident = self.getResidentById(person.id)
             resident.location = person.location
         
         print(self.manifest)
