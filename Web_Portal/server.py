@@ -100,6 +100,8 @@ class MyServer(SimpleHTTPRequestHandler):
         print(self.rfile.read(file_length))
         
         try:
+            data = self.rfile.read(file_length)
+            print(data)
             person = json.loads(self.rfile.read(file_length), cls=ResidentDecoder)
         except json.JSONDecodeError as j:
             print(j.msg)
