@@ -7,7 +7,7 @@ from urllib import parse
 
 
 hostName = "localhost"
-serverPort = 8080
+serverPort = 80
 
 
 class MyServer(SimpleHTTPRequestHandler):

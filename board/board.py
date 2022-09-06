@@ -134,9 +134,9 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-
+    print(args.pos_arg)
     
-    board = Board(arg.pos_arg[0])
+    board = Board(args.pos_arg[0])
 
     board.AskForUpdate()
     print(board.residents)
