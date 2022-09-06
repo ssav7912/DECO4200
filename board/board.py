@@ -129,7 +129,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="board.py [URL] --pins [pins]")
 
-    parser.add_argument('URL', type=str, help="Required URL to receive resident data from")
+    parser.add_argument('URL', help="Required URL to receive resident data from")
 
 
     args = parser.parse_args()
