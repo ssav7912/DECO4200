@@ -31,7 +31,7 @@ class Board:
     #   - WORK ->
     #Resident 2:
     #    - HOME -> 3
-    def initpinstruct(self) {
+    def initpinstruct(self) -> None:
         # mapping = {resident: {Location.HOME:None, Location.SHOPS: None, Location.WORK: None, Location.GYM: None} for resident in self.residents}
         mapping = {
             1: {Location.HOME:2, Location.SHOPS: None, Location.WORK: None, Location.GYM: None},
@@ -39,7 +39,7 @@ class Board:
         }
         return mapping
 
-    }
+    
 
     def pioinit(self, outputpins: 'list[int]') -> None:
         self.outputpins = outputpins
