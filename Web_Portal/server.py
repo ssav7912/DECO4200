@@ -97,13 +97,14 @@ class MyServer(SimpleHTTPRequestHandler):
         print(filename)
 
         file_length = int(self.headers['Content-Length'])
-        print(self.rfile.read(file_length))
+        data = self.rfile.read(file_length)
+        
+        print(data)
 
 
 
         try:
-            print(data)
-            person = json.loads(self.rfile.read(file_length), cls=ResidentDecoder)
+            person = json.loads(data, cls=ResidentDecoder)
         except json.JSONDecodeError as j:
             print(j.msg)
             self.send_response(400, "Not a valid JSON object")
