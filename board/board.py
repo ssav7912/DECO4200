@@ -74,8 +74,9 @@ class Board:
             if id not in self.manifest:
                 self.manifest.add(id)
                 resident = Resident(id, "placeholder")
-                self.move_location(self.getResidentById(id), Location.fromString(location))
                 self.residents.append(resident)
+                self.move_location(resident, Location.fromString(location))
+
 
             elif id in self.manifest:
                 resident = self.getResidentById(id)
