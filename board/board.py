@@ -70,7 +70,7 @@ class Board:
         updates = list(ids)
         locations = getLocations(updates)
 
-        for i, id, location in enumerate(zip(updates, locations)):
+        for i, (id, location) in enumerate(zip(updates, locations)):
             if id not in self.manifest:
                 self.manifest.add(id)
                 resident = Resident(id, "placeholder")
