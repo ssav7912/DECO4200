@@ -33,10 +33,10 @@ class Board:
     #    - HOME -> 3
     def initpinstruct(self) -> None:
         # mapping = {resident: {Location.HOME:None, Location.SHOPS: None, Location.WORK: None, Location.GYM: None} for resident in self.residents}
-        mapping = {
-            1: {Location.HOME:2, Location.SHOPS: None, Location.WORK: None, Location.GYM: None},
-            2: {Location.HOME:3, Location.SHOPS: None, Location.WORK: None, Location.GYM: None}
-        }
+        mapping = [
+            {Location.HOME:2, Location.SHOPS: None, Location.WORK: None, Location.GYM: None},
+            {Location.HOME:3, Location.SHOPS: None, Location.WORK: None, Location.GYM: None}
+        ]
         return mapping
 
     
