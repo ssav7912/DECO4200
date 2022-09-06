@@ -127,16 +127,16 @@ if __name__ == "__main__":
     # subprocess.Popen("sudo pigpiod")
         
 
-    parser = argparse.ArgumentParser(description="board.py [URL] --pins [pins]")
+    # parser = argparse.ArgumentParser(description="board.py [URL] --pins [pins]")
 
-    parser.add_argument('URL', help="Required URL to receive resident data from")
+    # parser.add_argument('URL', help="Required URL to receive resident data from")
 
 
-    args = parser.parse_args()
+    # args = parser.parse_args()
 
-    print(args.pos_arg)
+    # print(args.pos_arg)
     
-    board = Board(args.pos_arg[0])
+    board = Board(URL)
 
     board.AskForUpdate()
     print(board.residents)
