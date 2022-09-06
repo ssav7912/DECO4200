@@ -138,8 +138,11 @@ if __name__ == "__main__":
     
     board = Board(URL)
 
-    board.AskForUpdate()
-    print(board.residents)
+
+    while True:
+        board.AskForUpdate()
+        print(board.residents)
+        time.sleep(10)
 
     # loop = asyncio.get_event_loop()
     # try:
