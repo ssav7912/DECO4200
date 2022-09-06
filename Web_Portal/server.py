@@ -112,7 +112,12 @@ class MyServer(SimpleHTTPRequestHandler):
             self.wfile.write("Error")
             return
 
-        self.manifest.add(person)
+        if all(person.id != resident.id for resident in self.manifest):
+            self.manifest.add(person)
+        else:
+            resident = self.manifest.getResidentById(person.id)
+            resident.location = person.location
+        
         print(self.manifest)
 
         self.send_response(204)
