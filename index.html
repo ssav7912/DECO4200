@@ -1,0 +1,29 @@
+// tutorial from stack overflow how to record ID https://stackoverflow.com/questions/4825295/onclick-to-get-the-id-of-the-clicked-button
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>replit</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div > 
+    Confirm location
+  </div>
+<button id= "1" onclick="reply_click(this.id)">Home</button>
+<button id= "2" onclick="reply_click(this.id)">Shopping</button>
+<button id= "3" onclick="reply_click(this.id)">Gym</button>
+<script>
+  function reply_click(clicked_id)
+   
+  {
+    //link with Github database
+    alert(clicked_id);
+  }
+</script>
+</body>
+
+</html>
