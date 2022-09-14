@@ -1,7 +1,8 @@
- tutorial from stack overflow how to record ID https://stackoverflow.com/questions/4825295/onclick-to-get-the-id-of-the-clicked-button
-<!DOCTYPE html>
-<html>
 
+<!DOCTYPE html>
+
+<html>
+<!-- tutorial from stack overflow how to record ID https://stackoverflow.com/questions/4825295/onclick-to-get-the-id-of-the-clicked-button tutorial from stack overflow how to record ID https://stackoverflow.com/questions/4825295/onclick-to-get-the-id-of-the-clicked-button -->
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -10,6 +11,10 @@
 </head>
 
 <body>
+  <form>
+    Please put your name: <input type="text" name= "name", id="name">
+    <button id="textinput" type="button" onclick="makePerson()">Accept</button> 
+  </form>
   <div > 
     Confirm location
   </div>
@@ -17,9 +22,40 @@
 <button id= "2" onclick="reply_click(this.id)">Shopping</button>
 <button id= "3" onclick="reply_click(this.id)">Gym</button>
 <script>
+  
+  USER = null;
+  
+  class Person {
+    name;
+    id;
+    location;
+    
+    constructor(name, id) {
+      this.name = name;
+      this.id = null
+    }
+
+
+    newLocation(location) {
+      this.location = location;
+    }
+  }
+
+  function makePerson() {
+    text = document.querySelector("#name");
+    name = text.value;
+    // console.log(text);
+    USER = Person(name);
+
+  }
+
   function reply_click(clicked_id)
-   
   {
+    // sajitha = Person("sajitha", 0)
+
+    // if (clicked_id == "1"){
+    //   sajitha.newLocation("Home")
+    // }
     //link with Github database
     alert(clicked_id);
   }
