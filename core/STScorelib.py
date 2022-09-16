@@ -20,6 +20,10 @@ class Location(Enum):
             return dic[string]
         except KeyError:
             return Location.HOME
+    
+    @staticmethod
+    def asList() -> 'list[Location]':
+        return [Location.HOME, Location.SHOPS, Location.UNI, Location.GYM, Location.WORK] 
 
 
 class Resident:

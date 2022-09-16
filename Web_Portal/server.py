@@ -6,7 +6,7 @@ from core.STScorelib import Resident, Location, ResidentDecoder
 from urllib import parse
 
 
-hostName = "localhost"
+hostName = "0.0.0.0"
 serverPort = 8080
 
 
