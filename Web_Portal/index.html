@@ -18,13 +18,15 @@
   <div > 
     Confirm location
   </div>
-<button id= "1" onclick="reply_click(this.id)">Home</button>
-<button id= "2" onclick="reply_click(this.id)">Shopping</button>
-<button id= "3" onclick="reply_click(this.id)">Gym</button>
+<button id= "HOME" onclick="reply_click(this.id)">Home</button>
+<button id= "SHOPPING" onclick="reply_click(this.id)">Shopping</button>
+<button id= "GYM" onclick="reply_click(this.id)">Gym</button>
+<button id="WORK" onclick="reply_click(this.id)">Work</button>
 <script>
   
   USER = null;
-  
+  url = "http://localhost:8080"
+
   class Person {
     name;
     id;
@@ -32,32 +34,52 @@
     
     constructor(name, id) {
       this.name = name;
-      this.id = null
+      this.id = name;
     }
 
 
     newLocation(location) {
       this.location = location;
     }
+
+    toJSON() {
+
+      return "{ name: " + this.name + ", id: " + this.id + ", location: " + this.location + "}"; 
+    }
   }
 
   function makePerson() {
     text = document.querySelector("#name");
     name = text.value;
+
+    if (USER == null) {
+      USER = new Person(name);
+      console.log("New User");
+    }
+
+    if (!USER.name == name){
+        USER = new Person(name);
+        console.log("New User");
+    }
+    console.log("Same user");
     // console.log(text);
-    USER = Person(name);
 
   }
 
-  function reply_click(clicked_id)
+  async function reply_click(clicked_id)
   {
-    // sajitha = Person("sajitha", 0)
+    USER.location = clicked_id;
+    console.log(USER)
 
-    // if (clicked_id == "1"){
-    //   sajitha.newLocation("Home")
-    // }
+    var options = {method: "PUT", headers: {'Content-Type': 'application/json'}, body: USER.toJSON()}
+    r = new Request(url + "/content/" + USER.id + ".json", options=options)
+
+    await fetch(r)
+
+    
+
     //link with Github database
-    alert(clicked_id);
+    // alert(clicked_id);
   }
 </script>
 </body>

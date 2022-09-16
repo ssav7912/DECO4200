@@ -97,6 +97,7 @@ class MyServer(SimpleHTTPRequestHandler):
         print(filename)
 
         file_length = int(self.headers['Content-Length'])
+        print(self.rfile.read(file_length))
         
         try:
             person = json.loads(self.rfile.read(file_length), cls=ResidentDecoder)
@@ -104,16 +105,22 @@ class MyServer(SimpleHTTPRequestHandler):
             print(j.msg)
             self.send_response(400, "Not a valid JSON object")
             self.end_headers()
+            self.wfile.write("Error")
             return
 
         self.manifest.add(person)
+        print(self.manifest)
 
-        with open(f"current/{filename}", 'wb') as output_file:
-            output_file.write(person.toJson())
-            self.send_response(204, 'Created!')
-            self.end_headers()
-            # reply_body = "Saved"
-            # self.wfile.write(reply_body.encode('utf8'))
+        self.send_response(204)
+        self.end_headers()
+        self.wfile.write("Saved".encode('utf8'))
+
+        # with open(f"current/{filename}", 'wb') as output_file:
+        #     output_file.write(person.toJson())
+        #     self.send_response(204, 'Created!')
+        #     self.end_headers()
+        #     # reply_body = "Saved"
+        #     # self.wfile.write(reply_body.encode('utf8'))
 
     
 
