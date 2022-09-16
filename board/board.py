@@ -4,7 +4,7 @@ import asyncio
 import requests
 from core.STScorelib import Resident, Location
 import argparse
-
+import time
 
 class Board:
     '''
