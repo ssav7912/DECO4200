@@ -56,7 +56,7 @@ class Resident:
         return json.dumps(dic)
 
 class ResidentDecoder(json.JSONDecoder):
-    def decode(s: 'str') -> 'Resident':
+    def decode(self, s: 'str') -> 'Resident':
         obj = json.loads(s)
 
         fields = {"id", "name"}
