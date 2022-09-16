@@ -23,7 +23,7 @@ class MyServer(SimpleHTTPRequestHandler):
     PUT:
     Takes in a JSON object describing a `Resident` class and stores it.
     '''
-    manifest: 'set(Resident)' = {Resident("abc", "soren")}   
+    manifest: 'set(Resident)' = set()   
     
     
     def do_GET(self):
