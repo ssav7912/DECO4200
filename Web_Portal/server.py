@@ -18,12 +18,12 @@ class MyServer(SimpleHTTPRequestHandler):
 
     When `query?manifest=true` will return a list of the current userids stored
 
-    When `query?id=<id>` will return the location of the given userid. 
+    When `query?id=[<id>]` will return the location of the given userid. 
 
     PUT:
     Takes in a JSON object describing a `Resident` class and stores it.
     '''
-    manifest: 'set(Resident)' = set()    
+    manifest: 'set(Resident)' = {Resident("abc", "soren")}   
     
     
     def do_GET(self):
@@ -31,15 +31,33 @@ class MyServer(SimpleHTTPRequestHandler):
         request = parse.parse_qs(parse.urlparse(self.path).query)
 
         wantmanifest = request.get("manifest")
+        queryids = request.get("id")
+        
         # print(request.get("manifest"))
-
-        if wantmanifest[0] == "true":
-            response = self.returnManifest()
+        if wantmanifest is not None and queryids is None:
+            if wantmanifest[0] == "true":
+                response = self.returnManifest()
                 
-            self.send_response(200)
-            self.send_header("Content-type", "application/json")
-            self.end_headers()
-            self.wfile.write(response.encode('utf8'))
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(response.encode('utf8'))
+            else:
+                self.send_response(400, "Invalid request")
+        
+        elif wantmanifest is None and queryids is not None:
+            response = self.returnLocations(queryids)
+
+            if response is None:
+                self.send_response(400, "No such id")
+            else: 
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(response.encode('utf8'))
+
+
+
         else:
             super().do_GET()
 
@@ -50,7 +68,27 @@ class MyServer(SimpleHTTPRequestHandler):
 
         return json.dumps(manifest)
 
-    
+    def returnLocations(self, queryids: 'list[str]') -> str:
+        locations = []
+        for id in queryids:
+            try:
+                resident = self.getResidentById(id)
+                locations.append(str(resident.location))
+            except:
+                pass
+
+        if len(locations) == 0:
+            return None
+
+        return json.dumps(locations)
+
+
+    def getResidentById(self, id: str) -> 'Resident':
+        for resident in self.manifest:
+            if resident.id == id:
+                return resident
+        else:
+            raise KeyError("No such resident with that id")
 
 
     def do_PUT(self):
@@ -82,6 +120,7 @@ class MyServer(SimpleHTTPRequestHandler):
 
 if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), MyServer)
+
     print("Server Started")
 
     try:

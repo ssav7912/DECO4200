@@ -11,6 +11,16 @@ class Location(Enum):
 
     def __str__(self) -> str:
         return super().__str__().replace("Location.", "")
+    
+    @staticmethod
+    def fromString(string: str) -> 'Location':
+        dic = {str(loc): loc for loc in Location}
+        
+        try:
+            return dic[string]
+        except KeyError:
+            return Location.HOME
+
 
 class Resident:
     '''
@@ -26,7 +36,7 @@ class Resident:
         self.location = Location.HOME
 
     def __repr__(self) -> 'str':
-        return "<ID:" + self.id + "NAME:" + self.name + ">"
+        return "<ID: " + self.id + " NAME: " + self.name + " LOCATION: " + str(self.location) + ">"
 
     def move_location(self, location: 'Location') -> bool:
         if location is self.location:

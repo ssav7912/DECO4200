@@ -16,7 +16,7 @@ class Board:
 
     def __init__(self, url):
         # self.io = pigpio.pi()
-        self.residents = set()
+        self.residents: 'set[Resident]' = set()
         self.manifest = set()
         self.url = url
 
@@ -27,19 +27,34 @@ class Board:
     def AskForUpdate(self) -> None:
         ids = GetManifest()
 
+        updates = list(ids)
+        locations = getLocations(updates)
 
-        for id in ids:
+        for id, location in zip(updates, locations):
             if id not in self.manifest:
-                newResident = Resident(id, "placeholder")        
-                #TODO: Invoke a second request for name & location data
-                self.residents.add(newResident)
+                self.manifest.add(id)
+                resident = Resident(id, "placeholder")
+                resident.location = Location.fromString(location)
+                self.residents.add(resident)
+
+            elif id in self.manifest:
+                resident = self.getResidentById(id)
+                resident.location = Location.fromString(location)
+                
 
         self.manifest.update(ids)
 
 
+    def getResidentById(self, id: str) -> 'Resident':
+        for resident in self.residents:
+            if resident.id == id:
+                return resident
+
+        else:
+            raise KeyError("No such resident with that id")
+
+
         
-
-
 
 URL = "http://localhost:8080/"
 
@@ -56,6 +71,16 @@ def GetManifest() -> 'set[str]':
 
     return set(manifest)
 
+def getLocations(ids: 'list[str]') -> 'list[Location]':
+    locationrequest = requests.get(URL, params={"id": ids})
+    
+    try:
+        location = locationrequest.json()
+    except:
+        print("Location object incorrect!")
+        return []
+    
+    return location 
 
 if __name__ == "__main__":
     # subprocess.Popen("sudo pigpiod")
@@ -64,6 +89,7 @@ if __name__ == "__main__":
     board = Board(URL)
 
     board.AskForUpdate()
+    print(board.residents)
 
     # loop = asyncio.get_event_loop()
     # try:
