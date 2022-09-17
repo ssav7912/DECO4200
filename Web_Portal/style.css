@@ -6,7 +6,7 @@ html, body {
   height: 100%;
   width: 100%;
 }
-#one, #two, #three {
+#HOME, #SHOPPING, #GYM, #WORK {
   font-size: 8em;
 }
 form, div {
