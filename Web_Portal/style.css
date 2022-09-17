@@ -1,4 +1,17 @@
+*{
+  text-align: center;
+
+}
 html, body {
   height: 100%;
   width: 100%;
+}
+#one, #two, #three {
+  font-size: 8em;
+}
+form, div {
+  font-size: 2em;
+}
+#textinput{
+ font-size: 1em;
 }
