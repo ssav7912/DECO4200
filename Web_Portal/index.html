@@ -25,7 +25,7 @@
 <script>
   
   USER = null;
-  url = "http://localhost:8080"
+  url = window.location.href
 
   class Person {
     name;
@@ -44,7 +44,7 @@
 
     toJSON() {
 
-      return "{ name: " + this.name + ", id: " + this.id + ", location: " + this.location + "}"; 
+      return '{ "name":"' + this.name + '", "id":"' + this.id + '", "location": "' + this.location + '"}'; 
     }
   }
 
@@ -57,7 +57,7 @@
       console.log("New User");
     }
 
-    if (!USER.name == name){
+    if (USER.name != name){
         USER = new Person(name);
         console.log("New User");
     }
@@ -72,7 +72,7 @@
     console.log(USER)
 
     var options = {method: "PUT", headers: {'Content-Type': 'application/json'}, body: USER.toJSON()}
-    r = new Request(url + "/content/" + USER.id + ".json", options=options)
+    r = new Request(url, options=options)
 
     await fetch(r)
 

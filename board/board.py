@@ -4,7 +4,9 @@ import asyncio
 import requests
 from core.STScorelib import Resident, Location
 import argparse
+import time
 
+PINS = [3, 5, 11, 13, 15, 19, 21, 23]
 
 class Board:
     '''
@@ -17,7 +19,8 @@ class Board:
 
     def __init__(self, url):
         self.io = pigpio.pi()
-        self.pioinit([2, 3])
+	#pins 2,3,17,22,10,9,11
+        self.pioinit([3, 5, 11, 13, 15, 19, 21, 23])
         self.residents: 'set[Resident]' = []
         self.manifest = set()
         self.url = url
@@ -34,8 +37,8 @@ class Board:
     def initpinstruct(self) -> None:
         # mapping = {resident: {Location.HOME:None, Location.SHOPS: None, Location.WORK: None, Location.GYM: None} for resident in self.residents}
         mapping = [
-            {Location.HOME:2, Location.SHOPS: None, Location.WORK: None, Location.GYM: None},
-            {Location.HOME:3, Location.SHOPS: None, Location.WORK: None, Location.GYM: None}
+            {Location.HOME:2, Location.SHOPS: 17, Location.WORK: 22, Location.GYM: 9},
+            {Location.HOME:3, Location.SHOPS: 27, Location.WORK: 10, Location.GYM: 11}
         ]
         return mapping
 
@@ -142,9 +145,14 @@ if __name__ == "__main__":
 
 
     while True:
-        board.AskForUpdate()
-        print(board.residents)
-        time.sleep(10)
+        try:
+            board.AskForUpdate()
+            print(board.residents)
+            time.sleep(10)
+        except KeyboardInterrupt:
+            board.pioinit(PINS)
+            break
+		
 
     # loop = asyncio.get_event_loop()
     # try:

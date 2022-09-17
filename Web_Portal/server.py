@@ -23,7 +23,7 @@ class MyServer(SimpleHTTPRequestHandler):
     PUT:
     Takes in a JSON object describing a `Resident` class and stores it.
     '''
-    manifest: 'set(Resident)' = {Resident("abc", "soren")}   
+    manifest: 'set(Resident)' = set()   
     
     
     def do_GET(self):
@@ -97,10 +97,14 @@ class MyServer(SimpleHTTPRequestHandler):
         print(filename)
 
         file_length = int(self.headers['Content-Length'])
-        print(self.rfile.read(file_length))
+        data = self.rfile.read(file_length)
         
+        print(data)
+
+
+
         try:
-            person = json.loads(self.rfile.read(file_length), cls=ResidentDecoder)
+            person = json.loads(data, cls=ResidentDecoder)
         except json.JSONDecodeError as j:
             print(j.msg)
             self.send_response(400, "Not a valid JSON object")
@@ -108,7 +112,12 @@ class MyServer(SimpleHTTPRequestHandler):
             self.wfile.write("Error")
             return
 
-        self.manifest.add(person)
+        if all(person.id != resident.id for resident in self.manifest):
+            self.manifest.add(person)
+        else:
+            resident = self.getResidentById(person.id)
+            resident.location = person.location
+        
         print(self.manifest)
 
         self.send_response(204)
