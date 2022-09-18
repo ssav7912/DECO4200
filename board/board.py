@@ -20,7 +20,7 @@ class Board:
     def __init__(self, url):
         self.io = pigpio.pi()
 	#pins 2,3,17,22,10,9,11
-        self.pioinit([3, 5, 11, 13, 15, 19, 21, 23])
+        self.pioinit(PINS)
         self.residents: 'set[Resident]' = []
         self.manifest = set()
         self.url = url
@@ -49,6 +49,11 @@ class Board:
         
         for pin in outputpins:
             self.io.set_mode(pin, pigpio.OUTPUT)
+            self.io.write(pin, 0)
+
+
+    def resetpins(self, pins: 'list[int]') -> None:
+        for pin in pins:
             self.io.write(pin, 0)
 
     def move_location(self, resident, newLocation: 'Location') -> None:
@@ -143,15 +148,28 @@ if __name__ == "__main__":
     
     board = Board(URL)
 
+    board.AskForUpdate()
 
     while True:
         try:
-            board.AskForUpdate()
-            print(board.residents)
+
             time.sleep(10)
+        
+        
+            try:
+                board.AskForUpdate()
+                print(board.residents)
+            
+
+            except requests.exceptions.ConnectionError: 
+                print("Awaiting Connection...")
+                pass
+        
         except KeyboardInterrupt:
-            board.pioinit(PINS)
+            board.resetpins(PINS)
+            board.io.stop()
             break
+       
 		
 
     # loop = asyncio.get_event_loop()
