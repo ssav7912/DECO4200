@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo Spawning Server
-screen -mS Server python3 Web_Portal/server.py
+screen -dmS Server python3 -m Web_Portal.server Web_Portal.server
 
 echo Spawning Board
-screen -mS Board python3 board/board.py
+screen -dmS Board python3 -m board.board board.board
