@@ -6,7 +6,7 @@ html, body {
   height: 100%;
   width: 100%;
 }
-#HOME, #SHOPPING, #GYM, #WORK {
+.buttonstyle {
   font-size: 8em;
 }
 form, div {
