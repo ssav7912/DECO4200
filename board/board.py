@@ -82,8 +82,12 @@ class Board:
         '''
         #what's the average daily usage?
         
+        if (pstart - pend).days() <= 1:
+            return ELECUSAGEDAY
+        else:
+        
 
-        return np.array([1, 2, 3])
+            return ELECUSAGEMONTH
 
 URL = "http://localhost:8080/"
 
