@@ -1,6 +1,7 @@
 import json
 from enum import Enum
-
+import datetime
+import time
 
 class Location(Enum):
     HOME = 0
@@ -24,6 +25,7 @@ class Location(Enum):
     @staticmethod
     def asList() -> 'list[Location]':
         return [Location.HOME, Location.SHOPS, Location.UNI, Location.GYM, Location.WORK] 
+
 
 
 class Resident:
@@ -67,3 +69,24 @@ class ResidentDecoder(json.JSONDecoder):
         resident = Resident(obj["id"], obj["name"])
         resident.location = Location.fromString(obj["location"])
         return resident
+
+class Appliance:
+    '''
+    Generic Appliance class
+    '''
+    mode: 'str'
+    timestamp: 'datetime.datetime'
+    name: 'str'
+
+    def __init__(self, name):
+        self.name = name
+        self.mode = self.setMode("AVAILABLE")
+        self.timestamp = datetime.datetime.now()
+
+    def setMode(self, mode: 'str') -> str:
+        if mode not in ["DONE", "INUSE", "AVAILABLE"]:
+            return self.mode
+        else:
+            self.mode = mode
+
+        return self.mode

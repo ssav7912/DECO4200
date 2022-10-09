@@ -1,13 +1,14 @@
-import pigpio
-import subprocess
-import asyncio
+import eel
 import requests
-from core.STScorelib import Resident, Location
-import argparse
+from core.STScorelib import Resident, Location, Appliance
 import time
+import datetime
+import numpy as np
+from random import random
 
-#       3  5  11  13  15  19  21 23
-PINS = [2, 3, 17, 27, 22, 10, 9, 11]
+#sample electricty usage datasets
+ELECUSAGEMONTH: 'np.ndarray' = np.interp([np.random.random() for x in range(30)], [0, 1], [20, 25]) 
+ELECUSAGEDAY: 'np.ndarray' = np.interp([np.random.random() for x in range(24)], [0, 1], [0, 1])
 
 class Board:
     '''
@@ -15,59 +16,22 @@ class Board:
     '''
     manifest: 'set[str]'
     residents: 'list[Resident]'
+    appliances: 'list[Appliance]'
     url: str
 
 
-    def __init__(self, url):
-        self.io = pigpio.pi()
-	#pins 2,3,17,22,10,9,11
-        self.pioinit(PINS)
-        self.residents: 'set[Resident]' = []
+    def __init__(self, url, debug: 'bool' = True):
+        self.residents = []
         self.manifest = set()
         self.url = url
-        self.mapping = self.initpinstruct()
-        
+        self.appliances = []
 
+        eel.init('web')
 
-    #Pin mapping:
-    #Resident 1:
-    #   - HOME -> 2
-    #   - WORK ->
-    #Resident 2:
-    #    - HOME -> 3
-    def initpinstruct(self) -> None:
-        # mapping = {resident: {Location.HOME:None, Location.SHOPS: None, Location.WORK: None, Location.GYM: None} for resident in self.residents}
-        mapping = [
-            {Location.HOME:2, Location.SHOPS: 17, Location.WORK: 22, Location.GYM: 9},
-            {Location.HOME:3, Location.SHOPS: 27, Location.WORK: 10, Location.GYM: 11}
-        ]
-        return mapping
-
-    
-
-    def pioinit(self, outputpins: 'list[int]') -> None:
-        self.outputpins = outputpins
-        
-        for pin in outputpins:
-            self.io.set_mode(pin, pigpio.OUTPUT)
-            self.io.write(pin, 0)
-
-
-    def resetpins(self, pins: 'list[int]') -> None:
-        for pin in pins:
-            self.io.write(pin, 0)
-
-    def move_location(self, resident, newLocation: 'Location') -> None:
-        oldpin = self.mapping[self.residents.index(resident)][resident.location]
-
-        self.io.write(oldpin, 0)
-
-        resident.location = newLocation
-
-        newpin = self.mapping[self.residents.index(resident)][resident.location]
-        
-        self.io.write(newpin, 1)
-
+        if debug:
+            eel.start('UI.html', mode=None)
+        else: 
+            eel.start('UI.html')
 
     '''
     Sends a GET to the info server to get the resident manifest.
@@ -84,15 +48,10 @@ class Board:
                 self.manifest.add(id)
                 resident = Resident(id, "placeholder")
                 self.residents.append(resident)
-                if len(self.residents) <= len(self.mapping):
-                    self.move_location(resident, Location.fromString(location))
-
 
             elif id in self.manifest:
                 resident = self.getResidentById(id)
-                
-                self.move_location(self.getResidentById(id), Location.fromString(location))
-                
+                                
 
         self.manifest.update(ids)
 
@@ -105,8 +64,26 @@ class Board:
         else:
             raise KeyError("No such resident with that id")
 
+    def addAppliance(self, appliance: 'Appliance') -> None:
+        self.appliances.append(appliance)
 
+    def getApplianceByName(self, name: 'str') -> 'Appliance':
+        for appliance in self.appliances:
+            if appliance.name == name:
+                return appliance
+        else:
+            raise KeyError("No such appliance with that name")
+
+    def querySmartMeter(self, pstart: 'datetime.datetime', pend: 'datetime.datetime') -> 'np.ndarray':
+        '''
+        Unimplemented! Returns Test Data
+
+        Should query some smart meter API to retrieve electricity usage over the specified time period, returning it as an array.
+        '''
+        #what's the average daily usage?
         
+
+        return np.array([1, 2, 3])
 
 URL = "http://localhost:8080/"
 
@@ -135,18 +112,6 @@ def getLocations(ids: 'list[str]') -> 'list[Location]':
     return location 
 
 if __name__ == "__main__":
-    # subprocess.Popen("sudo pigpiod")
-        
-
-    # parser = argparse.ArgumentParser(description="board.py [URL] --pins [pins]")
-
-    # parser.add_argument('URL', help="Required URL to receive resident data from")
-
-
-    # args = parser.parse_args()
-
-    # print(args.pos_arg)
-    
     board = Board(URL)
 
     board.AskForUpdate()
@@ -167,23 +132,6 @@ if __name__ == "__main__":
                 pass
         
         except KeyboardInterrupt:
-            board.resetpins(PINS)
-            board.io.stop()
             break
-       
-		
-
-    # loop = asyncio.get_event_loop()
-    # try:
-    #     asyncio.ensure_future(board.AskForUpdate())
-    #     asyncio.sleep(10)
-    #     loop.run_forever()
-    # except KeyboardInterrupt:
-    #     pass
-    # finally:
-    #     print("Shutting down")
-    #     loop.close()
-
-
 
 

@@ -123,14 +123,6 @@ class MyServer(SimpleHTTPRequestHandler):
         self.send_response(204)
         self.end_headers()
         self.wfile.write("Saved".encode('utf8'))
-
-        # with open(f"current/{filename}", 'wb') as output_file:
-        #     output_file.write(person.toJson())
-        #     self.send_response(204, 'Created!')
-        #     self.end_headers()
-        #     # reply_body = "Saved"
-        #     # self.wfile.write(reply_body.encode('utf8'))
-
     
 
 
