@@ -1,14 +1,15 @@
 import eel
+import os
 import requests
-from core.STScorelib import Resident, Location, Appliance
+from core.STScorelib import *
 import time
 import datetime
 import numpy as np
 from random import random
 
 #sample electricty usage datasets
-ELECUSAGEMONTH: 'np.ndarray' = np.interp([np.random.random() for x in range(30)], [0, 1], [20, 25]) 
-ELECUSAGEDAY: 'np.ndarray' = np.interp([np.random.random() for x in range(24)], [0, 1], [0, 1])
+
+
 
 class Board:
     '''
@@ -16,22 +17,31 @@ class Board:
     '''
     manifest: 'set[str]'
     residents: 'list[Resident]'
-    appliances: 'list[Appliance]'
     url: str
+    home: 'Home'
 
-
+    @eel.expose
     def __init__(self, url, debug: 'bool' = True):
         self.residents = []
         self.manifest = set()
         self.url = url
-        self.appliances = []
+        self.home = None
 
-        eel.init('web')
+        eel.init('board/web')
 
-        if debug:
-            eel.start('UI.html', mode=None)
-        else: 
-            eel.start('UI.html')
+
+
+    def newHome(self, name: str, numlights: int):
+        self.home = Home(name, numlights)
+        data = self.home.querySmartMeter(datetime.datetime(2022,10,1), datetime.datetime(2022,10,30))
+        print("send")
+        eel.newConsumptionPlot([x for x in range(1, 30)], list(data))
+        return None
+
+    @eel.expose
+    def getData(self):
+        data = self.home.querySmartMeter(datetime.datetime(2022,10,1), datetime.datetime(2022,10,30))
+        return (list(data), [x for x in range(1, 30)])
 
     '''
     Sends a GET to the info server to get the resident manifest.
@@ -64,30 +74,7 @@ class Board:
         else:
             raise KeyError("No such resident with that id")
 
-    def addAppliance(self, appliance: 'Appliance') -> None:
-        self.appliances.append(appliance)
 
-    def getApplianceByName(self, name: 'str') -> 'Appliance':
-        for appliance in self.appliances:
-            if appliance.name == name:
-                return appliance
-        else:
-            raise KeyError("No such appliance with that name")
-
-    def querySmartMeter(self, pstart: 'datetime.datetime', pend: 'datetime.datetime') -> 'np.ndarray':
-        '''
-        Unimplemented! Returns Test Data
-
-        Should query some smart meter API to retrieve electricity usage over the specified time period, returning it as an array.
-        '''
-        #what's the average daily usage?
-        
-        if (pstart - pend).days() <= 1:
-            return ELECUSAGEDAY
-        else:
-        
-
-            return ELECUSAGEMONTH
 
 URL = "http://localhost:8080/"
 
@@ -117,17 +104,21 @@ def getLocations(ids: 'list[str]') -> 'list[Location]':
 
 if __name__ == "__main__":
     board = Board(URL)
+    board.newHome("test", 4)
 
-    board.AskForUpdate()
+            
+    eel.start('index.html', mode=None, block=True)
+    
+    # # board.AskForUpdate()
 
     while True:
         try:
 
-            time.sleep(5)
+            eel.sleep(5)
         
         
             try:
-                board.AskForUpdate()
+                # board.AskForUpdate()
                 print(board.residents)
             
 

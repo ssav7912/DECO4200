@@ -18,7 +18,7 @@ class MyServer(SimpleHTTPRequestHandler):
 
     When `query?manifest=true` will return a list of the current userids stored
 
-    When `query?id=[<id>]` will return the location of the given userid. 
+    When `query?id=[<id>]` will return the status of the given userid.
 
     PUT:
     Takes in a JSON object describing a `Resident` class and stores it.

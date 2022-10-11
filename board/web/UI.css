@@ -2,6 +2,13 @@ body {
     font-family:Arial, Helvetica, sans-serif;
 }
 
+.Status {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-evenly;
+}
+
 .Header {
     display: flex;
     flex-direction: row;
@@ -17,3 +24,4 @@ body {
 #groupname {
     flex-grow: 1;
 }
+
