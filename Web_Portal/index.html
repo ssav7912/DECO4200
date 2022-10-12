@@ -18,10 +18,16 @@
   <div > 
     Confirm location
   </div>
-<button class="buttonstyle" id= "HOME" onclick="reply_click(this.id)">Home</button>
-<button class="buttonstyle" id= "SHOPS" onclick="reply_click(this.id)">Shopping</button>
-<button class="buttonstyle" id= "GYM" onclick="reply_click(this.id)">Gym</button>
-<button class="buttonstyle" id="WORK" onclick="reply_click(this.id)">Work</button>
+<article>
+  <img src="test.jpg", width="5%">
+
+  <button class="buttonstyle" id= "AVAILABLE" onclick="reply_click(this.id)">Available</button>
+  <button class="buttonstyle" id= "BUSY" onclick="reply_click(this.id)">Busy</button>
+  <button class="buttonstyle" id= "DONOTDISTURB" onclick="reply_click(this.id)">Do not Disturb</button>
+  <button class="buttonstyle" id="AWAY" onclick="reply_click(this.id)">Away</button>
+  
+
+</article> 
 <script>
   
   USER = null;
@@ -30,7 +36,7 @@
   class Person {
     name;
     id;
-    location;
+    status;
     
     constructor(name, id) {
       this.name = name;
@@ -38,13 +44,13 @@
     }
 
 
-    newLocation(location) {
-      this.location = location;
+    newStatus(status) {
+      this.status = status;
     }
 
     toJSON() {
 
-      return '{ "name":"' + this.name + '", "id":"' + this.id + '", "location": "' + this.location + '"}'; 
+      return '{ "name":"' + this.name + '", "id":"' + this.id + '", "location: HOME", "status": "' + this.status + '"}'; 
     }
   }
 
@@ -62,13 +68,12 @@
         console.log("New User");
     }
     console.log("Same user");
-    // console.log(text);
 
   }
 
   async function reply_click(clicked_id)
   {
-    USER.location = clicked_id;
+    USER.status = clicked_id;
     console.log(USER)
 
     var options = {method: "PUT", headers: {'Content-Type': 'application/json'}, body: USER.toJSON()}

@@ -91,7 +91,7 @@ class Resident:
             return True
 
     def toJson(self):
-        dic = {"id": self.id, "name": self.name, "location": self.location, "status": self.status}
+        dic = {"id": self.id, "name": self.name, "location": str(self.location), "status": str(self.status)}
 
         return json.dumps(dic)
 
@@ -116,6 +116,7 @@ class Appliance:
     mode: 'str'
     timestamp: 'datetime.datetime'
     name: 'str'
+    timeleft: 'int'
 
     def __init__(self, name):
         self.name = name
@@ -130,6 +131,12 @@ class Appliance:
 
         return self.mode
 
+    def getTimeLeft(self) -> int:
+        if self.mode == "INUSE":
+            return self.timeleft
+        else:
+            return 0
+
 class Home:
     name: str
     appliances: 'list[Appliance]'
@@ -142,7 +149,7 @@ class Home:
         self.appliances =  []
         self.residents = []
         self.lights = [False for x in range(numlights)]
-        self.utilities = {Utility.ELECTRICITY}
+        self.utilities = {x for x in Utility}
     
 
     def init_lights(self, numlights: int) -> None:
@@ -188,6 +195,29 @@ class Home:
             return ELECUSAGEDAY
         else:
             return ELECUSAGEMONTH
+
+    def queryWaterUsage(self, pstart: 'datetime.datetime', pend: 'datetime.datetime') -> 'np.ndarray':
+        '''
+        Unimplemented! Returns Test Data
+
+        Should query some smart meter API to retrieve water usage over the specified time period, returning it as an array.
+        '''
+
+        if (abs((pstart - pend)).days) <= 1:
+            return WATERUSAGEDAY
+        else:
+            return WATERUSAGEMONTH
+
+    def queryGasUsage(self, pstart: 'datetime.datetime', pend: 'datetime.datetime') -> 'np.ndarray':
+        '''
+        Unimplemented! Returns Test Data
+
+        Should query some smart meter API to retrieve gas usage over the specified time period, returning it as an array.        
+        '''
+        if (abs((pstart- pend)).days) <= 1:
+            return GASUSAGEDAY
+        else:
+            return GASUSAGEMONTH
 
     def getResidentById(self, id: str) -> 'Resident':
         for resident in self.residents:

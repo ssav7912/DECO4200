@@ -7,10 +7,6 @@ import datetime
 import numpy as np
 from random import random
 
-#sample electricty usage datasets
-
-
-
 class Board:
     '''
     Board controller class.
@@ -29,19 +25,33 @@ class Board:
 
         eel.init('board/web')
 
+        if debug:
+            self.residents = [Resident(str(x), str(x)) for x in ["Soren", "Trang", "David", "Sajitha"]]
 
 
     def newHome(self, name: str, numlights: int):
         self.home = Home(name, numlights)
         data = self.home.querySmartMeter(datetime.datetime(2022,10,1), datetime.datetime(2022,10,30))
         print("send")
-        eel.newConsumptionPlot([x for x in range(1, 30)], list(data))
+        # eel.newConsumptionPlot([x for x in range(1, 30)], list(data))
         return None
 
-    @eel.expose
-    def getData(self):
-        data = self.home.querySmartMeter(datetime.datetime(2022,10,1), datetime.datetime(2022,10,30))
-        return (list(data), [x for x in range(1, 30)])
+    def getData(self, utility: 'str'):
+        if utility == 'ELECTRICITY': 
+            data = self.home.querySmartMeter(datetime.datetime(2022,10,1), datetime.datetime(2022,10,30))
+        elif utility == 'WATER':
+            data = self.home.queryWaterUsage(datetime.datetime(2022,10,1), datetime.datetime(2022,10,30))
+        elif utility == 'GAS':
+            data = self.home.queryGasUsage(datetime.datetime(2022,10,1), datetime.datetime(2022,10,30))
+        
+        return [list(data), [x for x in range(1, 30)]]
+
+    def getLights(self) -> int:
+        return self.home.getLightsOn()
+
+    def getResidents(self):
+        obj = [x.toJson() for x in self.residents]
+        return obj
 
     '''
     Sends a GET to the info server to get the resident manifest.
@@ -104,7 +114,13 @@ def getLocations(ids: 'list[str]') -> 'list[Location]':
 
 if __name__ == "__main__":
     board = Board(URL)
+
     board.newHome("test", 4)
+    eel.expose(board.getData)
+    eel.expose(board.getResidents)
+    eel.expose(board.getLights)
+    eel.generateResidents(board.getResidents())
+
 
             
     eel.start('index.html', mode=None, block=True)

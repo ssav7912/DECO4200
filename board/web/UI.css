@@ -16,6 +16,13 @@ body {
     justify-content: space-evenly;
 }
 
+.Residents { 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
 #basicinfo { 
     font-size: 2em;
     flex-grow: 2;
