@@ -22,6 +22,7 @@ class Location(Enum):
 
     def __str__(self) -> str:
         return super().__str__().replace("Location.", "")
+
     
     @staticmethod
     def fromString(string: str) -> 'Location':
@@ -43,15 +44,20 @@ class Status(Enum):
     DONOTDISTURB = "Do not Disturb"
 
     def __str__(self) -> str:
-        return super().value
+        return super().__str__().replace("Status.", "")
+
+    
+    def jsonrep(self) -> str:
+        return super().__str__().replace("Status.", "")
 
     @staticmethod
     def fromString(string: str) -> 'Status':
-        dic = {str(status) : status for status in Status}
-
+        dic = {status.jsonrep() : status for status in Status}
+        print(dic, string)
         try:
             return dic[string]
         except KeyError:
+            print("Unknown status!")
             return Status.AVAILABLE
 
     @staticmethod
@@ -72,15 +78,18 @@ class Resident:
     name: str
     location: 'Location' 
     status: 'Status'
+    emoji: str
 
     def __init__(self, id, name):
         self.id = id
         self.name = name
         self.location = Location.HOME
         self.status = Status.AVAILABLE
+        self.emoji = "😊"
 
     def __repr__(self) -> 'str':
-        return "<ID: " + self.id + " NAME: " + self.name + " LOCATION: " + str(self.location) + "STATUS:" + str(self.status) + ">"
+
+        return "<ID: " + self.id + " NAME: " + self.name + " LOCATION: " + str(self.location) + " STATUS: " + str(self.status) + ">"
 
     def move_location(self, location: 'Location') -> bool:
         if location is self.location:
@@ -91,15 +100,23 @@ class Resident:
             return True
 
     def toJson(self):
-        dic = {"id": self.id, "name": self.name, "location": str(self.location), "status": str(self.status)}
-
+        dic = {"id": self.id, "name": self.name, "location": str(self.location), "status": str(self.status), "emoji": self.emoji}
+        # print(dic)
         return json.dumps(dic)
+
+
+    def overwrite(self, other: 'Resident'):
+        self.id = other.id
+        self.name = other.name
+        self.location = other.location
+        self.status = other.status
+        self.emoji = other.emoji
 
 class ResidentDecoder(json.JSONDecoder):
     def decode(self, s: 'str') -> 'Resident':
         obj = json.loads(s)
 
-        fields = {"id", "name", "location", "status"}
+        fields = {"id", "name", "location", "status", "emoji"}
 
         if any(field not in obj.keys() for field in fields):
             raise json.JSONDecodeError("Not an appropriate Resident object for this decoder", s) 
@@ -107,6 +124,7 @@ class ResidentDecoder(json.JSONDecoder):
         resident = Resident(obj["id"], obj["name"])
         resident.location = Location.fromString(obj["location"])
         resident.status = Status.fromString(obj["status"])
+        resident.emoji = obj["emoji"]
         return resident
 
 class Appliance:
@@ -148,7 +166,7 @@ class Home:
         self.name = name
         self.appliances =  []
         self.residents = []
-        self.lights = [False for x in range(numlights)]
+        self.init_lights(numlights)
         self.utilities = {x for x in Utility}
     
 

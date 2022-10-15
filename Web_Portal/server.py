@@ -18,7 +18,7 @@ class MyServer(SimpleHTTPRequestHandler):
 
     When `query?manifest=true` will return a list of the current userids stored
 
-    When `query?id=[<id>]` will return the status of the given userid.
+    When `query?id=[<id>]` will return the given userid object as a JSON string.
 
     PUT:
     Takes in a JSON object describing a `Resident` class and stores it.
@@ -70,11 +70,13 @@ class MyServer(SimpleHTTPRequestHandler):
 
     def returnLocations(self, queryids: 'list[str]') -> str:
         locations = []
+        print(self.getResidentById("Soren"))
+
         for id in queryids:
             try:
                 resident = self.getResidentById(id)
-                locations.append(str(resident.location))
-            except:
+                locations.append(resident.toJson())
+            except KeyError:
                 pass
 
         if len(locations) == 0:
@@ -105,6 +107,7 @@ class MyServer(SimpleHTTPRequestHandler):
 
         try:
             person = json.loads(data, cls=ResidentDecoder)
+            # print(person)
         except json.JSONDecodeError as j:
             print(j.msg)
             self.send_response(400, "Not a valid JSON object")
@@ -116,7 +119,7 @@ class MyServer(SimpleHTTPRequestHandler):
             self.manifest.add(person)
         else:
             resident = self.getResidentById(person.id)
-            resident.location = person.location
+            resident.overwrite(person)
         
         print(self.manifest)
 

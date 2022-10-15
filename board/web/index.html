@@ -10,6 +10,7 @@
         <title>ChalkBoard UI</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="common.css">
         <link rel="stylesheet" href="UI.css">
         <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
 
@@ -20,7 +21,7 @@
         <![endif]-->
         <section class="Header">
             <div id="groupname">
-                
+ 
                 PLACEHOLDER
             </div>
             <div id="basicinfo">
@@ -28,7 +29,23 @@
                 <p id="date">09/10/2022</p>
             </div>
         </section>
+        <h2>Status</h2>
         <section id="residentsContainer" class = "Residents">
+            <template id="residentTemplate">
+            <div>
+                <svg viewBox="0 0 550 550" width="5em">
+                 <clipPath id="clip">
+                <circle cx="280" cy="280" r="250"></circle>
+                </clipPath>
+                <image href="test.jpg" x="-150" y="-150" width="60em" height="60em" clip-path="url(#clip)"/>
+                <circle id="statcircle" style="stroke: var(--available); fill: none; stroke-width: 2em;" cx="280" cy="280" r="250"></circle>
+                <text style="font-size: 10em" x="350" y="500">😊</text>
+
+                </svg>
+                    <p></p>
+                    <p></p>
+            </div>
+            </template>
 
         </section>
         <section class="Consumption">
@@ -41,7 +58,7 @@
         </section>
         <section class="Status">
             <div id="LightStatus">
-                PLACEHOLDER
+                Lights
                 <p id="Lights">0</p>
             </div>
             <div>

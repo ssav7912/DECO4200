@@ -1,0 +1,48 @@
+
+/*
+All in hex
+background: 482A79 fill(gradient)
+green available border: 5BCB03
+orange busy border: FF9900
+red do not disturb: EA0707
+blue away border: 8488F3
+white text: FFFFFF
+green status bar: 00C113
+red status bar: C62828
+content box elements: FFFFFF (15% opacity)
+blue columns graph: 5C93E8
+yellow area graph: FFC600 fill(gradient)
+legend box water: 5C93E8
+legend box electricity: FFDD67
+legend box total bill: C62828
+legend box text: 000000
+total bill text: FF0000
+*/
+
+:root {
+    --porple: #482a79;
+    --porplelight: #666980;
+    --available: #5BCB03;
+    --busy: #FF9900;
+    --donotdisturb: #EA0707;
+    --away: #8488F3;
+    --water: #5c93e8;
+    --electricity: #ffdd67;
+    --total: #C62828;
+    
+
+}
+
+body {
+    color: whitesmoke;
+    background-color: var(--porple);
+    font-family:Arial, Helvetica, sans-serif;
+    
+}
+
+section {
+    border-radius: 25px;
+    background-color: var(--porplelight);
+    margin-top: 2em;
+    margin-bottom: 2em;
+}

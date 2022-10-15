@@ -7,6 +7,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
   <title>replit</title>
+  <link href="../core/common.css" rel="stylesheet" type="text/css" />
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -37,10 +38,13 @@
     name;
     id;
     status;
+    emoji;
     
     constructor(name, id) {
       this.name = name;
       this.id = name;
+      this.status = "AVAILABLE";
+      this.emoji = "😊";
     }
 
 
@@ -50,7 +54,7 @@
 
     toJSON() {
 
-      return '{ "name":"' + this.name + '", "id":"' + this.id + '", "location: HOME", "status": "' + this.status + '"}'; 
+      return '{ "name":"' + this.name + '", "id":"' + this.id + '", "location": "HOME", "status": "' + this.status + '", "emoji": "'+ this.emoji + '"}'; 
     }
   }
 

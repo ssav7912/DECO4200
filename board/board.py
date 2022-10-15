@@ -26,7 +26,7 @@ class Board:
         eel.init('board/web')
 
         if debug:
-            self.residents = [Resident(str(x), str(x)) for x in ["Soren", "Trang", "David", "Sajitha"]]
+            self.residents = [Resident(x, x) for x in ["Soren", "Trang", "David", "Sajitha"]]                
 
 
     def newHome(self, name: str, numlights: int):
@@ -62,15 +62,17 @@ class Board:
 
         updates = list(ids)
         locations = getLocations(updates)
+        print(locations)
 
         for i, (id, location) in enumerate(zip(updates, locations)):
+            resident = json.loads(location, cls=ResidentDecoder)
+          
             if id not in self.manifest:
                 self.manifest.add(id)
-                resident = Resident(id, "placeholder")
                 self.residents.append(resident)
-
-            elif id in self.manifest:
-                resident = self.getResidentById(id)
+            else:
+                self.residents[self.residents.index(self.getResidentById(id))] = resident
+                eel.updateResidentWrapper(location)
                                 
 
         self.manifest.update(ids)
@@ -119,13 +121,13 @@ if __name__ == "__main__":
     eel.expose(board.getData)
     eel.expose(board.getResidents)
     eel.expose(board.getLights)
-    eel.generateResidents(board.getResidents())
+    # eel.generateResidents(board.getResidents())
 
 
             
-    eel.start('index.html', mode=None, block=True)
+    eel.start('index.html', mode=None, block=False)
     
-    # # board.AskForUpdate()
+    board.AskForUpdate()
 
     while True:
         try:
@@ -134,7 +136,7 @@ if __name__ == "__main__":
         
         
             try:
-                # board.AskForUpdate()
+                board.AskForUpdate()
                 print(board.residents)
             
 
