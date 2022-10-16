@@ -125,12 +125,12 @@ if __name__ == "__main__":
     eel.expose(board.getLights)
     # eel.generateResidents(board.getResidents())
 
-    if len(sys.argv == 2) {
+    if len(sys.argv == 2):
         hostname = sys.argv[1]
-    }
-    else {
+    
+    else:
         hostname = "localhost"
-    }
+    
 
             
     eel.start('index.html', host=hostname, mode=None, block=False)
