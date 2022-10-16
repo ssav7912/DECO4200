@@ -6,6 +6,8 @@ import time
 import datetime
 import numpy as np
 from random import random
+import sys
+
 
 class Board:
     '''
@@ -123,11 +125,21 @@ if __name__ == "__main__":
     eel.expose(board.getLights)
     # eel.generateResidents(board.getResidents())
 
+    if len(sys.argv == 2) {
+        hostname = sys.argv[1]
+    }
+    else {
+        hostname = "localhost"
+    }
 
             
-    eel.start('index.html', mode=None, block=False)
+    eel.start('index.html', host=hostname, mode=None, block=False)
     
-    board.AskForUpdate()
+    try:
+
+        board.AskForUpdate()
+    except requests.exceptions.ConnectionError:
+        print("Awaiting Connection...")
 
     while True:
         try:
