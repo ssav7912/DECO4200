@@ -7,11 +7,109 @@ html, body {
   width: 100%;
 }
 .buttonstyle {
-  font-size: 8em;
+  font-size: 0.5em;
+  justify-content: center;
+  text-align: center;
+  color: whitesmoke;
+  border-radius: 50%;
+  outline: none;
+  padding: 1em;
+  border: none;
+  width: 8em;
+  height: 8em;
+  word-wrap: break-word;
+}
+
+.Residents { 
+  background-color: var(--porplelight);
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 0.5em;
+  border-radius: 25px;
+}
+
+.Residents > * {
+  flex-grow: 100;
+  text-align: center;
+  flex-basis: 25%;
+}
+
+.buttonstyle:hover {
+  background-color: red;
+}
+
+.BottomPanel {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+}
+
+.BottomPanel > * {
+  text-align: center;
+  flex-grow: 4;
 }
 form, div {
   font-size: 2em;
 }
 #textinput{
  font-size: 1em;
+}
+
+.circle-wrapper {
+  /* background:Chartreuse; */
+  
+}
+
+.circle {
+  position: relative;
+  top:50%;
+  /* left:51%; */
+  margin:-51px;
+  /* background:red; */
+  border-radius:51%;
+  text-align:center;
+  line-height:100px;
+}
+
+#middle {
+  /* display: block; */
+  position: relative;
+  top: 50%;
+  /* left: 50%; */
+  /* right: 50%; */
+}
+
+.deg-0 {
+  transform:translate(-5em, 2em)
+}
+
+.deg-45 {
+  transform:rotate(46deg) translate(251px) rotate(-46deg);
+}
+
+.deg-90 {
+  transform:translate(10em, -7em);
+}
+
+.deg-135 {
+  transform:rotate(136deg) translate(251px) rotate(-136deg);
+}
+
+.deg-180 {
+  transform:translate(5em, -2.7em);
+}
+
+.deg-225 {
+  transform:rotate(226deg) translate(251px) rotate(-226deg);
+}
+
+.deg-270 {
+  transform:translate(-10em, -11em);
+}
+
+.deg-315 {
+  transform:rotate(316deg) translate(251px) rotate(-316deg);
 }

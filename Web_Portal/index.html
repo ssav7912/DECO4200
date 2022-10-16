@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>replit</title>
+  <title>STS Web Portal</title>
   <link href="../core/common.css" rel="stylesheet" type="text/css" />
   <link href="style.css" rel="stylesheet" type="text/css" />
 </head>
@@ -19,44 +19,42 @@
   <div > 
     Confirm location
   </div>
-<article>
-  <img src="test.jpg", width="5%">
+<article class="circle-wrapper" >
+  <svg id="middle" viewBox="0 0 550 550" width="20em">
+    <clipPath id="clip">
+        <circle cx="280" cy="280" r="250"></circle>
+    </clipPath>
+    <image href="test.jpg" x="-150" y="-150" width="60em" height="60em" clip-path="url(#clip)"/>
+    <circle id="statcircle" style="stroke: var(--available); fill: none; stroke-width: 2em;" cx="280" cy="280" r="250"></circle>
+    <text style="font-size: 10em" x="350" y="500">😊</text>
+  </svg>
 
-  <button class="buttonstyle" id= "AVAILABLE" onclick="reply_click(this.id)">Available</button>
-  <button class="buttonstyle" id= "BUSY" onclick="reply_click(this.id)">Busy</button>
-  <button class="buttonstyle" id= "DONOTDISTURB" onclick="reply_click(this.id)">Do not Disturb</button>
-  <button class="buttonstyle" id="AWAY" onclick="reply_click(this.id)">Away</button>
-  
+  <div class="circle deg-0">
+    <button class="buttonstyle" style="background-color: var(--available)" id="AVAILABLE" onclick="reply_click(this.id)">Available</button>
+  </div> 
+  <div class="circle deg-90">
+    <button class="buttonstyle" style="background-color: var(--busy);" id="BUSY" onclick="reply_click(this.id)">Busy</button>
+  </div>
+  <div class="circle deg-180">
+    <button class="buttonstyle" style="background-color: var(--donotdisturb);"id="DONOTDISTURB" onclick="reply_click(this.id)">Do not Disturb</button>
+  </div>
+  <div class="circle deg-270">
+    <button class="buttonstyle" style="background-color: var(--away);"id="AWAY" onclick="reply_click(this.id)">Away</button>
+  </div>
 
 </article> 
+
+<section class="BottomPanel">
+  <div id="Home"><a href="index.html">Home</a></div>
+  <div id="Housemates"><a href="housemates.html">Housemates</a></div>
+  <div id="Settings"></div>
+</section>
+<script src="../core/common.js"></script>
 <script>
   
   USER = null;
   url = window.location.href
 
-  class Person {
-    name;
-    id;
-    status;
-    emoji;
-    
-    constructor(name, id) {
-      this.name = name;
-      this.id = name;
-      this.status = "AVAILABLE";
-      this.emoji = "😊";
-    }
-
-
-    newStatus(status) {
-      this.status = status;
-    }
-
-    toJSON() {
-
-      return '{ "name":"' + this.name + '", "id":"' + this.id + '", "location": "HOME", "status": "' + this.status + '", "emoji": "'+ this.emoji + '"}'; 
-    }
-  }
 
   function makePerson() {
     text = document.querySelector("#name");
@@ -80,6 +78,8 @@
     USER.status = clicked_id;
     console.log(USER)
 
+    updateMainScreen(clicked_id);
+
     var options = {method: "PUT", headers: {'Content-Type': 'application/json'}, body: USER.toJSON()}
     r = new Request(url, options=options)
 
@@ -89,6 +89,12 @@
 
     //link with Github database
     // alert(clicked_id);
+  }
+
+  function updateMainScreen(status) {
+    element = document.getElementById("middle");
+
+    element.querySelectorAll("circle")[1].style.stroke = RESIDENTSTATUS[status];
   }
 </script>
 </body>

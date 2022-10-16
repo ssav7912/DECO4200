@@ -1,8 +1,6 @@
 
 CONSUMPTIONPLOT = null;
 
-RESIDENTSTATUS = {"AVAILABLE": "var(--available)", "BUSY": "var(--busy)", "AWAY": "var(--away)", "DONOTDISTURB": "var(--donotdisturb)"};
-
 
 /*updates the time nodes with the current time*/
 function updateTime(){
@@ -69,24 +67,7 @@ function generateResidents(residents) {
     }
 }
 
-/* 
-Generate resident container from template and resident object
-*/
-function residenttemplate(resident) { 
-    template = document.getElementById("residentTemplate");
 
-
-    const clone = template.content.cloneNode(true);
-    clone.firstElementChild.id = resident.id;
-
-
-    clone.firstElementChild.children[0].querySelectorAll("text")[0].textContent = resident.emoji;
-    clone.firstElementChild.children[1].appendChild(document.createTextNode(resident.name));
-    clone.firstElementChild.children[2].appendChild(document.createTextNode(resident.status));
-
-    return clone
-
-}
 
 eel.expose(updateResidentWrapper);
 function updateResidentWrapper(residentjson) {

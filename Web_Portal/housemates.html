@@ -6,12 +6,34 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="description" content="" />
   <link href="style.css" rel="stylesheet" type="text/css" />
+  <link href="../core/common.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
-  <article id="Housematesgrid" class="Housematesgrid">
-      
+  <article id="Housematesgrid" class="Residents">
+    <template id="residentTemplate">
+      <div>
+          <svg viewBox="0 0 550 550" width="5em">
+              <clipPath id="clip">
+                  <circle cx="280" cy="280" r="250"></circle>
+              </clipPath>
+              <image href="test.jpg" x="-150" y="-150" width="30em" height="30em" clip-path="url(#clip)"/>
+              <circle id="statcircle" style="stroke: var(--available); fill: none; stroke-width: 1em;" cx="280" cy="280" r="250"></circle>
+              <text style="font-size: 5em" x="350" y="500">😊</text>
+
+          </svg>
+              <p></p>
+              <p></p>
+      </div>
+      </template>  
+
   </article>
-  <script src="common.js"></script>
+  <section class="BottomPanel">
+    <div id="Home"><a href="index.html">Home</a></div>
+    <div id="Housemates"><a href="housemates.html">Housemates</a></div>
+    <div id="Settings"></div>
+  </section>
+
+  <script src="../core/common.js"></script>
   <script src="housemates.js" async defer></script>
 </body>
 </html>

@@ -4,7 +4,7 @@
 function renderHouseMates(housemateslist) {
     container = document.getElementById("Housematesgrid");
     for (const housemate of housemateslist) {
-        node = generateHousemateCard(housemate.name, housemate.status, null);
+        node = residenttemplate(housemate);
         container.appendChild(node);
     }
 }
