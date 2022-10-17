@@ -1,0 +1,876 @@
+html, body {
+  height: 100%;
+  width: 100%;
+}
+img {
+  position: absolute;
+width: 450px;
+height: 155px;
+left: -75px;
+top: 131px;
+}
+.button1 {
+  border: 2px solid #C3BEFF;
+border-radius: 5px;
+  position: absolute;
+  width: 151px;
+  height: 50px;
+  left: 112px;
+  top: 549px;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+
+color: #FFF7F7;
+  background-color: transparent;
+}
+.button1:hover {
+  background-color: #C3BEFF;
+  color: black;
+}
+.nextbutton{
+background-color: transparent; 
+  color: white; 
+  border:none;
+  position: absolute;
+  width: 54px;
+  height: 23px;
+  left: 282px;
+  top: 612px;
+  text-align: right;
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 18px;
+  
+}
+.nextbutton:hover {
+  background-color: #ffffff;
+  color: black;
+}
+.backbutton{
+background-color: transparent; 
+  color: white; 
+  border:none;
+  text-align: left;
+  position: absolute;
+  width: 54px;
+  height: 23px;
+  left: 40px;
+  top: 612px;
+  font-family: 'Raleway';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 18px;
+}
+.backbutton:hover {
+  background-color: #ffffff;
+  color: black;
+}
+
+.edit-members{
+  box-sizing: border-box;
+position: absolute;
+width: 124px;
+height: 41px;
+left: 26px;
+top: 531px;
+border: 1px solid #9F9EF8;
+  background-color: transparent;
+border-radius: 5px;
+  font-family: 'Raleway';
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+  text-align: center;
+color: #FFFFFF;
+}
+
+.leave-group{
+position: absolute;
+width: 124px;
+height: 41px;
+left: 224px;
+top: 531px;
+  font-family: 'Raleway';
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+color: #FFFFFF;
+  background-color: transparent;
+  border: 1px solid #C62828;
+border-radius: 5px;
+  
+}
+.rect,.rect-housemates,.rect-settings{
+  position: absolute;
+width: 104px;
+height: 60px;
+background: rgba(166, 168, 171, 0.13);
+border-radius: 10px;
+}
+
+.rect{ 
+left: 14px;
+top: 599px;
+}
+
+.rect-housemates{
+left: 136px;
+top: 599px;
+}
+
+.rect-settings{
+left: 259px;
+top: 599px;
+}
+
+
+
+h1{
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  color: #FFFFFF;
+  position: absolute;
+  height: 28px;
+  top: 69px;
+  left: 70px;
+  right: 25px;
+  text-align: center;
+  width: 250px;
+
+}
+
+.connecttext{
+  position: absolute;
+  width: 293px;
+  height: 28px;
+  left: 41px;
+  top: 69px;
+  text-align: center;
+    white-space: nowrap;  
+}
+
+.maintitle{
+  position: absolute;
+width: 221px;
+height: 45px;
+left: 77px;
+top: 116px;
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 20px;
+line-height: 23px;
+text-align: center;
+color: #FFFFFF;
+}
+
+.housemates-text{
+  position: absolute;
+width: 233px;
+height: 51px;
+left: 71px;
+top: 35px;
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 700;
+font-size: 36px;
+line-height: 42px;
+text-align: center;
+
+color: #FFFFFF;
+}
+
+.housemates-h3{
+ position: absolute;
+width: 172px;
+height: 38px;
+left: 102px;
+top: 88px;
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+text-align: center;
+
+color: rgba(255, 255, 255, 0.79);
+}
+
+.you-settings h3{
+position: absolute;
+width: 36px;
+height: 17px;
+left: 26px;
+top: 98px;
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+
+color: #FFFFFF;
+}
+.group-settings h3{
+position: absolute;
+width: 58px;
+height: 17px;
+left: 26px;
+top: 321px;
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+
+color: #FFFFFF;
+}
+h2{
+  position: absolute;
+width: 54px;
+height: 23px;
+left: 282px;
+top: 612px;
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 18px;
+text-align: right;
+
+color: #FFFFFF;
+}
+
+h3{
+position: absolute;
+width: 111px;
+height: 16px;
+left: 132px;
+top: 104px;
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+text-align: center;
+white-space: nowrap;
+color: white;
+}
+
+h4{
+  position: absolute;
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+text-align: center;
+
+color: #FFFFFF;
+
+}
+
+.david h4{
+  width: 143px;
+height: 51px;
+left: -8px;
+top: 200px;
+
+}
+
+.david img{
+  position: absolute;
+width: 60px;
+height: 60px;
+left: 34px;
+top: 155px;
+}
+
+.lily h4{
+  position: absolute;
+width: 143px;
+height: 51px;
+left: 250px;
+top: 200px;
+}
+.lily img{
+width: 60px;
+height: 60px;
+left: 288px;
+top: 153px;
+  border-radius: 50%;
+}
+
+.michelle h4{
+position: absolute;
+width: 143px;
+height: 51px;
+left: -1px;
+top: 470px;
+}
+.michelle img{
+position: absolute;
+width: 60px;
+height: 60px;
+left: 41px;
+top: 427px;
+  border-radius: 50%;
+}
+
+.perez h4{
+position: absolute;
+width: 143px;
+height: 51px;
+left: 240px;
+top: 472px;
+
+}
+.perez img{
+position: absolute;
+width: 62px;
+height: 62px;
+left: 281px;
+top: 427px;
+  border-radius: 50%;
+}
+
+.callum h4{
+width: 143px;
+height: 51px;
+left: 120px;
+top: 520px;
+}
+.callum img{
+position: absolute;
+width: 60px;
+height: 60px;
+left: 161px;
+top: 476px;
+  border-radius: 50%;
+}
+
+.lily-status img{
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  left: 67px;
+  top: 155px;
+  border: 3px solid #00C113;
+  border-radius: 50%;
+}
+
+.lily-status h4{
+width: 143px;
+height: 51px;
+left: 30px;
+top: 230px;
+}
+
+.lily-status p{
+width: 96px;
+height: 46px;
+left: 54px;
+top: 261px;
+}
+.perez-status img{
+  position: absolute;
+width: 62px;
+height: 62px;
+left: 251px;
+top: 155px;
+border: 3px solid #5C93E8;
+  border-radius: 50%;
+}
+
+.perez-status h4{
+width: 143px;
+height: 51px;
+left: 210px;
+top: 230px;
+}
+
+.perez-status p{
+  width: 143px;
+height: 51px;
+left: 210px;
+top: 261px;
+}
+
+.michelle-status img{
+position: absolute;
+width: 62px;
+height: 62px;
+left: 70px;
+top: 365px;
+border: 3px solid #FFDD67;
+  border-radius: 50%;
+}
+
+.michelle-status h4{
+width: 143px;
+height: 51px;
+left: 30px;
+top: 437px;
+}
+
+.michelle-status p{
+width: 113px;
+height: 31px;
+left: 45px;
+top: 468px;
+}
+
+.callum-status img{
+  border-radius: 50%;
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  left: 251px;
+  top: 365px;
+  border: 3px solid #FF0000;
+}
+
+.callum-status h4{
+width: 143px;
+height: 51px;
+left: 216px;
+top: 437px;
+}
+
+.callum-status p {
+width: 119px;
+height: 15px;
+left: 228px;
+top: 468px;
+
+}
+
+.housemates-status h4{
+ position: absolute;
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 700;
+font-size: 15px;
+line-height: 18px;
+text-align: center;
+}
+.housemates-status p{
+  position: absolute;
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 10px;
+line-height: 12px;
+text-align: center;
+color: #ACABAB;
+}
+
+.housemates-status div {
+background: rgba(141, 141, 141, 0.15);
+border-radius: 10px;
+  position: absolute;
+  width: 125px;
+height: 164px;
+}
+
+.rect-lily{
+left: 38px;
+top: 142px;
+}
+
+.rect-perez{
+  left: 221px;
+top: 142px;
+}
+
+.rect-michelle{
+left: 40px;
+top: 350px;
+}
+
+.rect-callum{
+left: 223px;
+top: 350px;
+}
+
+.emoji{
+position: absolute;
+font-size: 400px;
+
+}
+
+.lily-status .emoji{
+left: 110px;
+top: 180px;
+  width: 32px;
+height: 32px;
+}
+
+.perez-status .emoji{
+  left: 294px;
+top: 180px;
+  width: 32px;
+height: 32px;
+}
+
+.michelle-status .emoji{
+  left: 110px;
+   top: 390px;
+  width: 32px;
+  height: 32px;
+}
+
+.callum-status .emoji{
+left: 294px;
+top: 390px;
+  width: 32px;
+height: 32px;
+}
+:-ms-input-placeholder { 
+position: absolute;
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+}
+
+.group-settings img{
+  position: absolute;
+width: 87px;
+height: 84px;
+left: 144px;
+top: 347px;
+}
+
+.you-settings img{
+  position: absolute;
+width: 83px;
+height: 81px;
+left: 148px;
+top: 127px;
+
+}
+#welcomescreen{
+  background-image: url("Images/background.png");
+  position: relative;
+  width: 375px;
+  height: 667px;
+  background-repeat: no-repeat;
+}
+
+#backgroundforprofile{
+  background-image: url("Images/background2.png");
+  position: relative;
+  width: 375px;
+  height: 667px;
+  background-repeat: no-repeat;
+}
+#backgroundforprofile2{
+  background-image: url("Images/bg-pair.png");
+  position: relative;
+  width: 375px;
+  height: 667px;
+  background-repeat: no-repeat;
+}
+#UploadImage{
+position: absolute;
+width: 273px;
+height: 116px;
+left: 85px;
+top: 186px;
+}
+
+#UploadButton{
+  position: absolute;
+width: 170px;
+height: 170px;
+left: 102px;
+top: 179px;
+}
+#davidpicture{
+position: absolute;
+width: 170px;
+height: 170px;
+left: 102px;
+top: 179px;
+}
+
+#UploadButtonGroup{
+  position: absolute;
+  width: 119px;
+  height: 119px;
+  left: 128px;
+  top: 214px;
+  object-fit: cover;
+}
+#carousel {
+position: absolute;
+width: 34px;
+height: 10px;
+left: 171px;
+top: 616px;
+}
+#username{
+position: absolute;
+width: 261px;
+height: 41px;
+left: 57px;
+top: 389px;
+background: #53565F;
+border: 1px solid #9F9EF8;
+border-radius: 5px;
+box-sizing: border-box;
+padding: 10px;
+color: #ffffff;
+}
+#QRcode{
+position: absolute;
+width: 218px;
+height: 224px;
+left: 79px;
+top: 223px;
+}
+#ProfilePics{
+position: absolute;
+width: 563px;
+height: 563px;
+left: -92px;
+top: -7px;
+object-fit: contain;
+}
+#groupname{
+position: absolute;
+width: 158px;
+height: 41px;
+left: 109px;
+top: 364px;
+background: #53565F;
+border: 1px solid #9F9EF8;
+border-radius: 5px;
+box-sizing: border-box;
+color: white;
+  padding: 5px;
+}
+#Uploadbutton2{
+position: absolute;
+width: 264px;
+height: 113px;
+left: 94px;
+top: 229px;
+}
+#groupphoto{
+position: absolute;
+width: 119px;
+height: 119px;
+left: 128px;
+top: 214px;
+}
+#backgroundformain{
+  background-image: url("Images/mainbackground.png");
+  position: relative;
+  width: 375px;
+  height: 667px;
+  background-repeat: no-repeat;
+}
+
+#backgroundforhousemates{
+  background-image: url("Images/housemates-bg.png");
+  position: relative;
+  width: 375px;
+  height: 667px;
+  background-repeat: no-repeat;
+}
+#You{
+position: absolute;
+width: 53px;
+height: 43px;
+left: 40px;
+top: 607px;
+}
+
+#Housemates{
+position: absolute;
+width: 66px;
+height: 40px;
+left: 155px;
+top: 610px;
+
+}
+#Settings{
+position: absolute;
+width: 53px;
+height: 45px;
+left: 284px;
+top: 605px;
+}
+#text{
+position: absolute;
+width: 172px;
+height: 38px;
+left: 33px;
+top: 36px;
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 12px;
+line-height: 14px;
+
+color: #FFFFFF;
+
+}
+/* master circle created for base of each status */ 
+.circle{
+  height: 50px;
+  width: 50px;
+  margin-top: 100px;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  color: white;
+  font-size: 12px;
+    font-family: 'Raleway';
+  
+}
+/* available status, please reduce transparency of other circles if this is active*/ 
+.circle:nth-of-type(1) {
+  background-color: #00C113;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  left: 56px;
+  top: 100px;
+
+}
+/* busy status, please reduce transparency of other circles if this is active*/ 
+.circle:nth-of-type(2) {
+background-color: #e9900B;
+position: absolute;
+width: 64px;
+height: 64px;
+left: 252px;
+top: 100px;
+
+}
+/* do not disturb status, please reduce transparency of other circles if this is active*/ 
+.circle:nth-of-type(3) {
+background-color: #C62828;
+position: absolute;
+width: 64px;
+height: 64px;
+left: 56px;
+top: 300px;
+}
+/* away status, please reduce transparency of other circles if this is active*/ 
+.circle:nth-of-type(4) {
+background-color: #6166EF;
+position: absolute;
+width: 64px;
+height: 64px;
+left: 252px;
+top: 300px;
+
+}
+/* .border for each status can be achieved by changing the colour from transparent - the deafault state, into the corresponsing colours of diffeernt status ie: Transparent -> #c62828 (do not disturb)*/ 
+.border{
+height:161px;
+width:161px;
+border-radius: 50%;
+outline:5px solid transparent;
+}
+.border:nth-of-type(1) {
+background-color: transparent;
+position: absolute;
+width: 161px;
+height: 161px;
+left: 106px;
+top: 256px;
+}
+#profilepicmain{
+position: absolute;
+width: 161px;
+height: 161px;
+left: 106px;
+top: 256px;
+}
+#editname{
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+width: 216px;
+height: 41px;
+left: 98px;
+top: 226px;
+background: #53565F;
+color: white;
+box-sizing: border-box;
+border: 1px solid #44414F;
+padding: 10px;
+}
+#editgname{
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+width: 216px;
+height: 41px;
+left: 98px;
+top: 444px;
+background: #53565F;
+color: white;
+box-sizing: border-box;
+border: 1px solid #44414F;
+padding: 10px;
+}
+.name{
+position: absolute;
+width: 49px;
+height: 19px;
+left: 26px;
+top: 223px;
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+color: #A9A8A8;
+
+  
+}
+.name2{
+position: absolute;
+width: 49px;
+height: 19px;
+left: 26px;
+top: 441px;
+
+font-family: 'Raleway';
+font-style: normal;
+font-weight: 400;
+font-size: 16px;
+line-height: 19px;
+color: #A9A8A8;
+}
+
