@@ -20,7 +20,15 @@
     Confirm location
   </div>
 <article class="circle-wrapper" >
-  <svg id="middle" viewBox="0 0 550 550" width="20em">
+  <template id="DialogBox">
+    <div>
+      <input type="text" name="Feeling" id="feeling" onsubmit="sendfeeling()">
+
+    </div>
+
+  </template>
+
+  <svg id="middle" viewBox="0 0 550 550" width="20em" onlick="spawnQuestion()">
     <clipPath id="clip">
         <circle cx="280" cy="280" r="250"></circle>
     </clipPath>
@@ -28,7 +36,6 @@
     <circle id="statcircle" style="stroke: var(--available); fill: none; stroke-width: 2em;" cx="280" cy="280" r="250"></circle>
     <text style="font-size: 10em" x="350" y="500">😊</text>
   </svg>
-
   <div class="circle deg-0">
     <button class="buttonstyle" style="background-color: var(--available)" id="AVAILABLE" onclick="reply_click(this.id)">Available</button>
   </div> 
@@ -95,6 +102,13 @@
     element = document.getElementById("middle");
 
     element.querySelectorAll("circle")[1].style.stroke = RESIDENTSTATUS[status];
+  }
+
+  function spawnQuestion() {
+    template = document.getElementById("DialogBox");
+    const clone = template.content.cloneNode(true);
+
+
   }
 </script>
 </body>

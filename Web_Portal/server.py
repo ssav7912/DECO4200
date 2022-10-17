@@ -20,10 +20,12 @@ class MyServer(SimpleHTTPRequestHandler):
 
     When `query?id=[<id>]` will return the given userid object as a JSON string.
 
+    When `query?users=true` will return a list of all user objects (in JSON)
+
     PUT:
     Takes in a JSON object describing a `Resident` class and stores it.
     '''
-    manifest: 'set(Resident)' = set()   
+    manifest: 'set(Resident)' = {Resident(x, x) for x in ["David", "Trang", "Sajitha", "Callum"]}
     
     
     def do_GET(self):
@@ -32,6 +34,7 @@ class MyServer(SimpleHTTPRequestHandler):
 
         wantmanifest = request.get("manifest")
         queryids = request.get("id")
+        wantall = request.get("users")
         
         # print(request.get("manifest"))
         if wantmanifest is not None and queryids is None:
@@ -56,7 +59,16 @@ class MyServer(SimpleHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(response.encode('utf8'))
 
+        elif wantmanifest is None and queryids is None and wantall is not None:
+            if wantall[0] == "true":
+                response = self.returnUsers()
 
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(response.encode('utf8'))
+            else: 
+                self.send_response(400, "Invalid Request")
 
         else:
             super().do_GET()
@@ -67,6 +79,11 @@ class MyServer(SimpleHTTPRequestHandler):
         manifest = [elem.id for elem in self.manifest]
 
         return json.dumps(manifest)
+
+    def returnUsers(self) -> str:
+        print(self.manifest)
+        users = [user.toJson() for user in self.manifest]
+        return json.dumps(users)
 
     def returnLocations(self, queryids: 'list[str]') -> str:
         locations = []
@@ -132,6 +149,7 @@ class MyServer(SimpleHTTPRequestHandler):
 if __name__ == "__main__":
     webServer = HTTPServer((hostName, serverPort), MyServer)
 
+    webServer.manifest = {Resident(x, x) for x in ["David, Trang, Sajitha, Callum"]}
     print("Server Started")
 
     try:
