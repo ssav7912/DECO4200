@@ -19,7 +19,7 @@ class Board:
     home: 'Home'
 
     @eel.expose
-    def __init__(self, url, debug: 'bool' = True):
+    def __init__(self, url, debug: 'bool' = False):
         self.residents = []
         self.manifest = set()
         self.url = url
@@ -28,11 +28,14 @@ class Board:
         eel.init('board/web')
 
         if debug:
-            self.residents = [Resident(x, x) for x in ["Soren", "Trang", "David", "Sajitha"]]                
+            self.residents = [x for x in DEBUGMANIFEST]                
 
 
     def newHome(self, name: str, numlights: int):
         self.home = Home(name, numlights)
+        self.home.appliances = DEBUGAPPLIANCES
+        self.home.togglelight(0, True)
+        self.home.togglelight(2, True)
         data = self.home.querySmartMeter(datetime.datetime(2022,10,1), datetime.datetime(2022,10,30))
         print("send")
         # eel.newConsumptionPlot([x for x in range(1, 30)], list(data))
@@ -72,6 +75,7 @@ class Board:
             if id not in self.manifest:
                 self.manifest.add(id)
                 self.residents.append(resident)
+                eel.CreateResidentCardWrapper(resident.toJson())
             else:
                 self.residents[self.residents.index(self.getResidentById(id))] = resident
                 eel.updateResidentWrapper(location)
@@ -79,6 +83,19 @@ class Board:
 
         self.manifest.update(ids)
 
+    def AskForUsers(self) -> None:
+        users = getUsers()
+
+        for i, user in enumerate(users):
+            if user.id not in self.manifest:
+                self.manifest.add(user.id)
+                self.residents.append(user)
+                eel.CreateResidentCardWrapper(user.toJson())
+            else:
+                self.residents[self.residents.index(self.getResidentById(user.id))] = user
+                eel.updateResidentWrapper(user.toJson())
+        
+    
 
     def getResidentById(self, id: str) -> 'Resident':
         for resident in self.residents:
@@ -105,6 +122,35 @@ def GetManifest() -> 'set[str]':
 
     return set(manifest)
 
+def getUsers() -> 'set[Resident]':
+    userRequest = requests.get(URL, params={"users": "true"})
+    print(userRequest.url)
+
+    # try:
+    lis = userRequest.json()
+    users = set()
+    for obj in lis:
+        resident = json.loads(obj, cls=ResidentDecoder)
+        users.add(resident)
+            
+
+    # except:
+    #     print("User object incorrect!")
+    #     users = set()
+    
+    return users
+    
+@eel.expose
+def getName() -> 'str':
+    nameRequest = requests.get(URL, params={"homename": "true"})
+    
+    name = nameRequest.text
+
+    print(name)
+
+    return name
+
+
 def getLocations(ids: 'list[str]') -> 'list[Location]':
     locationrequest = requests.get(URL, params={"id": ids})
     
@@ -123,9 +169,10 @@ if __name__ == "__main__":
     eel.expose(board.getData)
     eel.expose(board.getResidents)
     eel.expose(board.getLights)
+    eel.expose(board.home.getAppliances)
     # eel.generateResidents(board.getResidents())
 
-    if len(sys.argv)  == 2:
+    if len(sys.argv) == 2:
         hostname = sys.argv[1]
     
     else:
@@ -134,10 +181,9 @@ if __name__ == "__main__":
 
             
     eel.start('index.html', mode=None, block=False)
-    
     try:
 
-        board.AskForUpdate()
+        board.AskForUsers()
     except requests.exceptions.ConnectionError:
         print("Awaiting Connection...")
 
@@ -148,7 +194,7 @@ if __name__ == "__main__":
         
         
             try:
-                board.AskForUpdate()
+                board.AskForUsers()
                 print(board.residents)
             
 

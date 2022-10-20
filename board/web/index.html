@@ -12,7 +12,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="common.css">
         <link rel="stylesheet" href="UI.css">
-        <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+        <script src="plotly-2.14.0.min.js"></script>
 
     </head>
     <body>
@@ -42,33 +42,42 @@
                     <text style="font-size: 10em" x="350" y="500">😊</text>
 
                 </svg>
-                    <p></p>
+                    <h3></h3>
                     <p></p>
             </div>
             </template>
 
         </section>
+        <h2>Consumption</h2>
         <section class="Consumption">
             <div>
-                <button id="ELECTRICITY" onclick="graphbutton(this.id)">Electricty</button>
+                <button id="ELECTRICITY" onclick="graphbutton(this.id)">Electricity</button>
                 <button id="WATER" onclick="graphbutton(this.id)">Water</button>
                 <button id="GAS" onclick="graphbutton(this.id)">Gas</button>
             </div>
             <div id="consume"></div>            
         </section>
-        <section class="Status">
+        <h2>Status</h2>
+        <section id="statuscontainer" class="Status">
+            <template id="ApplianceTemplate">
+                <div>
+                    <div class="loadingbar">
+                        <div class="loadingbar" style="width:100%; background-color: var(--available); height: 100%;"></div> 
+                    </div> 
+                    <h3></h3>
+                    <h3></h3>
+                    <h3></h3> 
+                </div>
+
+            </template>
+
+
             <div id="LightStatus">
-                Lights
-                <p id="Lights">0</p>
-            </div>
-            <div>
-                PLACEHOLDER
-            </div>
-            <div>
-                PLACEHOLDER
-            </div>
-            <div>
-                PLACEHOLDER
+                <div class="loadingbar">
+                    <div class="loadingbar" style="width:100%; background-color: var(--available); height: 100%;"></div>
+                </div>
+                <h3>Lights</h3>
+                <h3 id="Lights">0</h3>
             </div>
         </section>
         <script type="text/javascript" src="/eel.js"></script>

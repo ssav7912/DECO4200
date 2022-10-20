@@ -12,23 +12,25 @@
 </head>
 
 <body>
-  <form>
-    Please put your name: <input type="text" name= "name", id="name">
-    <button id="textinput" type="button" onclick="makePerson()">Accept</button> 
+  <form onsubmit="return makePerson()">
+    Enter your name: <input type="text" name= "name", id="name">
+    <input type="submit" value="Accept">
+    <!-- <button id="textinput" type="button" onclick="makePerson()">Accept</button>  -->
   </form>
-  <div > 
-    Confirm location
+  <div>
+    Let your housemates know what you're up to!
   </div>
-<article class="circle-wrapper" >
+<article id="main" class="circle-wrapper">
   <template id="DialogBox">
-    <div>
-      <input type="text" name="Feeling" id="feeling" onsubmit="sendfeeling()">
-
-    </div>
+    <form id="dialog" onsubmit="return sendFeeling()">
+      <input type="text" name="feeling" id="feeling" onsubmit="sendFeeling()">
+      <input type="text" name="emoji" id="emoji" onsubmit="updateEmoji()">
+      <input type="submit" id="submit" value="OK">
+    </form>
 
   </template>
-
-  <svg id="middle" viewBox="0 0 550 550" width="20em" onlick="spawnQuestion()">
+  <div id="questionbox">
+  <svg id="middle" viewBox="0 0 550 550" width="15em" onclick="spawnQuestion()">
     <clipPath id="clip">
         <circle cx="280" cy="280" r="250"></circle>
     </clipPath>
@@ -36,6 +38,7 @@
     <circle id="statcircle" style="stroke: var(--available); fill: none; stroke-width: 2em;" cx="280" cy="280" r="250"></circle>
     <text style="font-size: 10em" x="350" y="500">😊</text>
   </svg>
+  </div>
   <div class="circle deg-0">
     <button class="buttonstyle" style="background-color: var(--available)" id="AVAILABLE" onclick="reply_click(this.id)">Available</button>
   </div> 
@@ -78,6 +81,9 @@
     }
     console.log("Same user");
 
+    reply_click(USER.status)
+
+    return false;
   }
 
   async function reply_click(clicked_id)
@@ -105,11 +111,64 @@
   }
 
   function spawnQuestion() {
+    if (document.getElementById("dialog") != null){
+      return
+    }
+
     template = document.getElementById("DialogBox");
     const clone = template.content.cloneNode(true);
 
+    clone.getElementById("emoji").value = USER.emoji;
+    main = document.getElementById("questionbox");
+    main.appendChild(clone);
+    // document.body.addEventListener('click', deleteQuestion(), true);
+  }
+
+  function deleteQuestion() {
+    document.getElementById("dialog").remove();
+  }
+
+
+  function sendFeeling() {
+    text = document.getElementById("feeling").value;
+    emoji = document.getElementById("emoji").value;
+
+    if (USER != null) {
+      USER.statstring = text;
+      if (isOnlyOneEmoji(emoji)) {
+        USER.emoji = emoji;
+        document.getElementById("middle").querySelector("text").innerHTML = emoji;
+        document.getElementById("questionbox").innerHTML += "";
+
+        var options = {method: "PUT", headers: {'Content-Type': 'application/json'}, body: USER.toJSON()};
+
+        r = new Request(url, options=options);
+        fetch(r)
+
+        deleteQuestion();
+      }
+      else {
+        alert("You must enter a single emoji!");
+      }
+
+    }
+
+    return false;
 
   }
+
+  function updateEmoji() {
+    emoji = document.getElementById("emoji").value;
+    if (isOnlyOneEmoji(emoji)) {
+      USER.emoji = emoji;
+
+      var options = {method: "PUT", headers: {'Content-Type': 'application/json'}, body: USER.toJSON()};
+
+      r = new Request(url, options=options);
+      fetch(r)
+    }
+  }
+
 </script>
 </body>
 

@@ -2,8 +2,25 @@
 .Status {
     display: flex;
     flex-direction: row;
-    flex-grow: 1;
     justify-content: space-evenly;
+    padding: 1em;
+    padding-bottom: 2em;
+}
+
+.Status div {
+    flex-grow: 0.2;
+    text-align: center;
+}
+
+button {
+    color: whitesmoke;
+    background-color: var(--porplelight);
+    border-color: var(--porple);
+    font-size: 2em;
+    display: block;
+    text-align: center;
+    border-radius: 5px;
+
 }
 
 .Header {
@@ -37,32 +54,47 @@
     padding: 2em; 
     
 }
-.Consumption:first-child {
+.Consumption :first-child {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-items: stretch;
     flex-grow: 4;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
-.Consumption:first-child > * {
+.Consumption :first-child > * {
     flex: flex-grow;
 }
 
 .Consumption > * {
-    flex: flex-grow;
+    flex: flex-shrink;
 }
 #basicinfo { 
-    font-size: 2em;
+    font-size: 1em;
     flex-grow: 2;
+    text-align: center;
 }
 
 #groupname {
     flex-grow: 1;
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 .statuscircle { 
     stroke: green;
     fill: none;
     stroke-width: 2em;
+}
+
+.loadingbar {
+    background-color: lightgray;
+    border-radius: 25px;
+    height:30%;
+    z-index: -1;
 }

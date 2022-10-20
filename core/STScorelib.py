@@ -4,15 +4,6 @@ import datetime
 import time
 import numpy as np
 
-ELECUSAGEMONTH: 'np.ndarray' = np.interp([np.random.random() for x in range(30)], [0, 1], [20, 25]) 
-ELECUSAGEDAY: 'np.ndarray' = np.interp([np.random.random() for x in range(24)], [0, 1], [0, 1])
-
-WATERUSAGEMONTH: 'np.ndarray' = np.interp([np.random.random() for x in range(30)], [0, 1], [180*3, 220*3])
-WATERUSAGEDAY: 'np.ndarray' = np.interp([np.random.random() for x in range(24)], [0,1], [(180*3)/24, (220*3)/24])
-
-GASUSAGEMONTH: 'np.ndarray' = np.interp([np.random.random() for x in range(30)], [0, 1], [20, 23])
-GASUSAGEDAY: 'np.ndarray' = np.interp([np.random.random() for x in range(24)], [0, 1], [20/24, 23/24])
-
 class Location(Enum):
     HOME = 0
     SHOPS = 1
@@ -78,6 +69,7 @@ class Resident:
     name: str
     location: 'Location' 
     status: 'Status'
+    statstring: str
     emoji: str
 
     def __init__(self, id, name):
@@ -85,6 +77,7 @@ class Resident:
         self.name = name
         self.location = Location.HOME
         self.status = Status.AVAILABLE
+        self.statstring = ""
         self.emoji = "😊"
 
     def __repr__(self) -> 'str':
@@ -100,7 +93,7 @@ class Resident:
             return True
 
     def toJson(self):
-        dic = {"id": self.id, "name": self.name, "location": str(self.location), "status": str(self.status), "emoji": self.emoji}
+        dic = {"id": self.id, "name": self.name, "location": str(self.location), "status": str(self.status), "statstring": self.statstring, "emoji": self.emoji}
         # print(dic)
         return json.dumps(dic)
 
@@ -110,13 +103,14 @@ class Resident:
         self.name = other.name
         self.location = other.location
         self.status = other.status
+        self.statstring = other.statstring
         self.emoji = other.emoji
 
 class ResidentDecoder(json.JSONDecoder):
     def decode(self, s: 'str') -> 'Resident':
         obj = json.loads(s)
 
-        fields = {"id", "name", "location", "status", "emoji"}
+        fields = {"id", "name", "location", "status", "statstring", "emoji"}
 
         if any(field not in obj.keys() for field in fields):
             raise json.JSONDecodeError("Not an appropriate Resident object for this decoder", s) 
@@ -125,6 +119,7 @@ class ResidentDecoder(json.JSONDecoder):
         resident.location = Location.fromString(obj["location"])
         resident.status = Status.fromString(obj["status"])
         resident.emoji = obj["emoji"]
+        resident.statstring = obj["statstring"]
         return resident
 
 class Appliance:
@@ -154,6 +149,9 @@ class Appliance:
             return self.timeleft
         else:
             return 0
+
+    def toJson(self) -> 'str':
+        return {"mode": self.mode, "name": self.name, "timeleft": self.timeleft}
 
 class Home:
     name: str
@@ -189,6 +187,8 @@ class Home:
 
         return i
 
+    def getAppliances(self) -> 'list[Appliance]':
+        return [x.toJson() for x in self.appliances]
         
     def addAppliance(self, appliance: 'Appliance') -> None:
         self.appliances.append(appliance)
@@ -244,3 +244,32 @@ class Home:
 
         else:
             raise KeyError("No such resident with that id")
+
+
+ELECUSAGEMONTH: 'np.ndarray' = np.interp([np.random.random() for x in range(30)], [0, 1], [20, 25]) 
+ELECUSAGEDAY: 'np.ndarray' = np.interp([np.random.random() for x in range(24)], [0, 1], [0, 1])
+
+WATERUSAGEMONTH: 'np.ndarray' = np.interp([np.random.random() for x in range(30)], [0, 1], [180*3, 220*3])
+WATERUSAGEDAY: 'np.ndarray' = np.interp([np.random.random() for x in range(24)], [0,1], [(180*3)/24, (220*3)/24])
+
+GASUSAGEMONTH: 'np.ndarray' = np.interp([np.random.random() for x in range(30)], [0, 1], [20, 23])
+GASUSAGEDAY: 'np.ndarray' = np.interp([np.random.random() for x in range(24)], [0, 1], [20/24, 23/24])
+
+DEBUGMANIFEST = [Resident(x,x) for x in ["David", "Trang", "Sajitha", "Callum"]]
+DEBUGSTATUS = [Status.AVAILABLE, Status.AWAY, Status.DONOTDISTURB, Status.AVAILABLE]
+DEBUGSTATSTRING = ["I'm making coffee", "I'm out at work", "Studying!", ""]
+DEBUGEMOJI = ["☕","👨‍💻","📚","😺"]
+
+for index, resident in enumerate(DEBUGMANIFEST):
+    resident.status = DEBUGSTATUS[index]
+    resident.statstring = DEBUGSTATSTRING[index]
+    resident.emoji = DEBUGEMOJI[index] 
+
+DEBUGHOMENAME: 'str' = "DECO4200"
+
+DEBUGAPPLIANCES = [Appliance(x) for x in ["Dishwasher", "Washing Machine", "Dryer"]]
+DEBUGTIME = [50, 30, 100]
+DEBUGAPPLIANCESTATUS = ["INUSE", "INUSE", "AVAILABLE"]
+for index, appliance in enumerate(DEBUGAPPLIANCES):
+    appliance.timeleft = DEBUGTIME[index]
+    appliance.mode = DEBUGAPPLIANCESTATUS[index]

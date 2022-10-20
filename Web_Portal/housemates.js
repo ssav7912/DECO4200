@@ -9,25 +9,6 @@ function renderHouseMates(housemateslist) {
     }
 }
 
-
-function generateHousemateCard(name, status, photo) {
-
-    div = document.createElement("div");
-    p = document.createElement("name");
-    p2 = document.createElement("status");
-
-    nametext = document.createTextNode(name);
-    statustext = document.createTextNode(status);
-
-    p.appendChild(nametext);
-    p2.appendChild(statustext);
-
-    div.appendChild(p);
-    div.appendChild(p2);
-
-    return div;
-}
-
 async function getHousemates(housemateslist) {
     const url = window.location.href + "?users=true"
     const options = {method: "GET"};
@@ -42,15 +23,12 @@ async function getHousemates(housemateslist) {
         if (resident == null) {
             
             newres = new Person(obj.name, obj.id);
-            newres.status = obj.status;
-            newres.emoji = obj.emoji;
-
-          await list.push(newres)
+            newres.initFromObj(obj);
+            await list.push(newres);
 
         }
         else {
-            resident.status = obj.status;
-            resident.emoji = obj.emoji;
+            resident.refreshFromObj(obj);
         }
     }    
     return list;

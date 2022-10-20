@@ -18,6 +18,10 @@ legend box total bill: C62828
 legend box text: 000000
 total bill text: FF0000
 */
+@font-face {
+    font-family: 'Raleway';
+    src: url('../core/fonts/Raleway-BVpl.ttf') format('truetype');
+}
 
 :root {
     --porple: #482a79;
@@ -29,14 +33,14 @@ total bill text: FF0000
     --water: #5c93e8;
     --electricity: #ffdd67;
     --total: #C62828;
-    
+
 
 }
 
 body {
     color: whitesmoke;
     background-color: var(--porple);
-    font-family:Arial, Helvetica, sans-serif;
+    font-family: 'Raleway', Arial, Helvetica, sans-serif;
     
 }
 
@@ -45,4 +49,14 @@ section {
     background-color: var(--porplelight);
     margin-top: 2em;
     margin-bottom: 2em;
+}
+
+.Residents h3 {
+    font-weight: bold;
+    margin: 0em;
+    padding: 0em;
+}
+.Residents p { 
+    font-weight: lighter;
+    margin-top: 0em;
 }

@@ -2,7 +2,7 @@ from http.server import BaseHTTPRequestHandler, SimpleHTTPRequestHandler, HTTPSe
 import time
 import os
 import json 
-from core.STScorelib import Resident, Location, ResidentDecoder
+from core.STScorelib import *
 from urllib import parse
 
 
@@ -22,11 +22,13 @@ class MyServer(SimpleHTTPRequestHandler):
 
     When `query?users=true` will return a list of all user objects (in JSON)
 
+    When `query?homename=true` will return the current household name
+
     PUT:
     Takes in a JSON object describing a `Resident` class and stores it.
     '''
-    manifest: 'set(Resident)' = {Resident(x, x) for x in ["David", "Trang", "Sajitha", "Callum"]}
-    
+    manifest: 'set(Resident)' = {x for x in DEBUGMANIFEST}
+    homename = DEBUGHOMENAME
     
     def do_GET(self):
 
@@ -35,6 +37,7 @@ class MyServer(SimpleHTTPRequestHandler):
         wantmanifest = request.get("manifest")
         queryids = request.get("id")
         wantall = request.get("users")
+        getname = request.get("homename")
         
         # print(request.get("manifest"))
         if wantmanifest is not None and queryids is None:
@@ -69,6 +72,15 @@ class MyServer(SimpleHTTPRequestHandler):
                 self.wfile.write(response.encode('utf8'))
             else: 
                 self.send_response(400, "Invalid Request")
+
+        elif all([x is None for x in [wantmanifest, queryids, wantall]]) and getname is not None:
+            if getname[0] == "true":
+                response = self.homename
+
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(response.encode('utf8'))
 
         else:
             super().do_GET()

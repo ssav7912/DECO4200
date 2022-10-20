@@ -37,13 +37,23 @@ Generates utility usage plot
 */
 eel.expose(newConsumptionPlot);
 function newConsumptionPlot(datax, datay) {
-    cons = document.getElementById("consume")
+    cons = document.getElementById("consume");
+    const layout = { 
+            width: 600,
+            plot_bgcolor: "#666980",
+            paper_bgcolor: "#666980",
+            font: {color: "whitesmoke"}
+        }
+    
     CONSUMPTIONPLOT = Plotly.newPlot(cons, [{
         x: datax,
         y: datay,
-        type: 'scatter'
-    }])
-    Plotly.update()
+        type: 'scatter',
+        line: {
+            color: "whitesmoke",
+        }
+    }], layout)
+    // Plotly.update()
 }
 
 
@@ -75,6 +85,15 @@ function updateResidentWrapper(residentjson) {
     updateResident(resident);
 }
 
+eel.expose(CreateResidentCardWrapper);
+function CreateResidentCardWrapper(residentjson) {
+    const resident = JSON.parse(residentjson);
+    const clone = residenttemplate(resident);
+
+    container = document.getElementById("residentsContainer");
+    container.appendChild(clone);
+}
+
 function updateResident(resident) {
     console.log(resident)
     element = document.getElementById(resident.id);
@@ -83,22 +102,32 @@ function updateResident(resident) {
     element.firstElementChild.querySelectorAll("text")[0].textContent = resident.emoji;
     element.firstElementChild.querySelectorAll("circle")[1].style.stroke = RESIDENTSTATUS[resident.status];
 
-    element.children[2].textContent = resident.status; 
+    // element.children[2].textContent = RESIDENTSTRINGMAP[resident.status];
+    element.children[2].textContent = resident.statstring; 
 
 }
 
+eel.expose(createApplianceWrapper)
+function createApplianceWrapper(appliancejson) {
+    const appliance = JSON.parse(appliancejson);
+    createAppliance(appliance);
+}
 
+function createAppliance(appliance) {
+    const clone = appliancetemplate(appliance);
+    container = document.getElementById("statuscontainer").appendChild(clone);
+}
 
 function appliancetemplate(appliance) {
-    div = document.createElement("div");
-    text = document.createElement("p");
-    let name = document.createTextNode(appliance.name);
-    let status = documnet.createElement("p");
+   template = document.getElementById("ApplianceTemplate");
 
-    text.appendChild(name);
-    status.appendChild(document.createTextNode(appliance.status));
-    div.appendChild(text);
-    div.appendChild(status);
+   const clone = template.content.cloneNode(true);
+
+   clone.firstElementChild.children[1].textContent = appliance.name; 
+   clone.firstElementChild.children[2].textContent = appliance.mode;
+   clone.firstElementChild.children[0].firstElementChild.style.width = String(appliance.timeleft) + "%";
+
+    return clone;
 }
 
 
@@ -107,5 +136,12 @@ updateTime();
 window.setInterval(updateTime, 1000);
 
 eel.getData("ELECTRICITY")(n => {newConsumptionPlot(n[1], n[0])});
-eel.getResidents()(n => {generateResidents(n)});
+// eel.getResidents()(n => {generateResidents(n)});
 eel.getLights()(n => {updateLights(n)});
+eel.getName()(n => {document.getElementById("groupname").textContent = n})
+eel.getAppliances()(n => {
+    for (const appliancejson of n) {
+        // const appliance = JSON.parse(appliancejson);
+        createAppliance(appliancejson);
+    }
+})

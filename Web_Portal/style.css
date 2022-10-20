@@ -2,10 +2,7 @@
   text-align: center;
 
 }
-html, body {
-  height: 100%;
-  width: 100%;
-}
+
 .buttonstyle {
   font-size: 0.5em;
   justify-content: center;
@@ -20,20 +17,35 @@ html, body {
   word-wrap: break-word;
 }
 
+a { 
+  padding: 2em;
+  color: whitesmoke;
+  text-decoration: none;
+  border-radius: 25px;
+}
+a:hover {
+  background-color: var(--porplelight);
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+
 .Residents { 
   background-color: var(--porplelight);
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  padding: 0.5em;
+  padding: 1em;
   border-radius: 25px;
 }
 
 .Residents > * {
   flex-grow: 100;
   text-align: center;
-  flex-basis: 25%;
+  flex-basis: 50%;
+
 }
 
 .buttonstyle:hover {
@@ -44,6 +56,7 @@ html, body {
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  padding: 2em;
 
 }
 
@@ -51,11 +64,32 @@ html, body {
   text-align: center;
   flex-grow: 4;
 }
-form, div {
+form {
   font-size: 2em;
 }
 #textinput{
  font-size: 1em;
+}
+
+#dialog {
+  position: relative;
+  bottom: 70%;
+  width: 90%;
+  background-color: orange;
+  justify-content: center;
+  border-radius: 25px;
+  padding: 0.2em;
+  z-index: 10;
+}
+
+#dialog > * {
+  background-color: orange;
+  color: whitesmoke;
+  border: none;
+}
+
+#dialog > :nth-child(2) {
+    width: 15%;
 }
 
 .circle-wrapper {
@@ -83,7 +117,8 @@ form, div {
 }
 
 .deg-0 {
-  transform:translate(-5em, 2em)
+  transform:translate(-5em, 2em);
+  z-index: 10;
 }
 
 .deg-45 {
