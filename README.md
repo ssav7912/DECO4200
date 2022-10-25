@@ -49,7 +49,7 @@ Minimum requirements for the device are:
 - An ipad-sized display to render the board UI
 - A mobile device to access the web interface.
 
-The hardware will need some OS, and will need an internet connection. For this project, we used a Raspberry Pi to host both the board and server processes from, in a sandboxed local wireless network. However, the system is designed so that the board and server can be hosted separately: the board on the users local (private) network, and the server on some public host.
+The hardware will need some OS, and will need an internet connection. For this project, we used a Raspberry Pi to host both the board and server processes from, in a sandboxed local wireless network broadcast via the RPi. However, the system is designed so that the board and server can be hosted separately: the board on the users local (private) network, and the server on some public host. This is the ideal use case, as residents would be able to update their status independent of their local network. 
 
 
 ## Install and Running
@@ -67,3 +67,5 @@ screen -dMS Server python3 -m Web_Portal.server Web_Portal.server
 screen -dMS Board python3 -m board.board board.board
 ```
 By default, the server spawns a page on `http://localhost:8080`. The board will listen on `localhost` for HTTP API requests, and it will spawn its own interface on `http://localhost:8000`. Neither of these are secured with HTTPS, so do not send any sensitive data over this system.
+
+One can view debug output from either screen session with `screen -Dr [Session Name]`. See the `screen` manual for more information.

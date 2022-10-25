@@ -61,6 +61,9 @@ function newConsumptionPlot(datax, datay) {
 }
 
 
+/* 
+Sets the light display widget based on the number it receives.
+*/
 eel.expose(updateLights)
 function updateLights(lightsOn) {
     lights = document.getElementById("Lights");
@@ -82,13 +85,19 @@ function generateResidents(residents) {
 }
 
 
-
+/* 
+Wrapper function for the board python controller to call to update a resident
+widget with new data.
+*/
 eel.expose(updateResidentWrapper);
 function updateResidentWrapper(residentjson) {
     const resident = JSON.parse(residentjson);
     updateResident(resident);
 }
 
+/*
+Wrapper function for the board python controller to call to initialize a resident widget.
+*/
 eel.expose(CreateResidentCardWrapper);
 function CreateResidentCardWrapper(residentjson) {
     const resident = JSON.parse(residentjson);
@@ -125,11 +134,21 @@ function createAppliance(appliance) {
 function appliancetemplate(appliance) {
    template = document.getElementById("ApplianceTemplate");
 
+   if (appliance.mode == "INUSE") {
+        color = "var(--donotdisturb)";
+   }
+   else {
+    color = "var(--available)";
+   }
+
    const clone = template.content.cloneNode(true);
 
    clone.firstElementChild.children[1].textContent = appliance.name; 
-   clone.firstElementChild.children[2].textContent = appliance.mode;
+   clone.firstElementChild.children[2].textContent = APPLIANCESTRINGMAP[appliance.mode];
    clone.firstElementChild.children[0].firstElementChild.style.width = String(appliance.timeleft) + "%";
+   clone.firstElementChild.children[0].firstElementChild.style.backgroundColor = color;
+
+//    debugger
 
     return clone;
 }
