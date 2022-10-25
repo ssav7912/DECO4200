@@ -42,13 +42,17 @@ function newConsumptionPlot(datax, datay) {
             width: 600,
             plot_bgcolor: "#666980",
             paper_bgcolor: "#666980",
-            font: {color: "whitesmoke"}
+            font: {color: "whitesmoke"},
+
         }
     
     CONSUMPTIONPLOT = Plotly.newPlot(cons, [{
         x: datax,
         y: datay,
         type: 'scatter',
+        fill: 'tozeroy',
+        mode: 'none',
+        fillcolor:"#ffdd67",
         line: {
             color: "whitesmoke",
         }

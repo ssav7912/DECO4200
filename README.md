@@ -1,7 +1,7 @@
 # DECO4200
 Team repository for DECO4200
 
-This repository stores the source programs for the HouseHub interface.
+This repository stores the source programs for the HouseHub proof of concept interface.
 
 There are 2 main components:
 - The Board (`board` directory)
@@ -10,7 +10,7 @@ There are 2 main components:
 Common library utils and resources are stored in `core`. Both the board and the server depend on this.
 
 ## The Board
-The board handles management of the chalkboard display UI, as well as any other 'household' tasks, such as communicating with Smart Meter APIs. The board communicates with the Server to retrieve information about the household.
+The board handles management of the chalkboard display UI, as well as any other 'household' tasks, such as communicating with Smart Meter APIs. The board communicates with the Server to retrieve information about the household members. Ideally, Smart Meter interactions (currently unimplemented) should be handled by the board, separate to any central server communication.
 
 
 ## The Server
@@ -28,7 +28,19 @@ When `query?users=true` will return a list of all user objects (in JSON).
 When `query?homename=true` will return the current household name.
 
 ### PUT:
-Takes in a JSON object describing a `Resident` class and stores it.
+Takes in a JSON object describing a `Resident` class and stores it if the name doesn't match any stored, or overwrites that record if it does.
+
+```json
+{
+    "name": str,
+    "id": str,
+    "location": str(Location),
+    "status": str(Status),
+    "statstring": str
+    "emoji": str
+
+}
+ ``` 
 
 ## Hardware Requirements
 Minimum requirements for the device are:
@@ -50,9 +62,8 @@ Dependencies:
 These packages are all available via `pip`
 
 The repository provides a script `testenv.sh` to start up both the Board and the Server on a local machine. This just spawns both processes in named `screen` terminals:
-```
+```bash
 screen -dMS Server python3 -m Web_Portal.server Web_Portal.server
 screen -dMS Board python3 -m board.board board.board
 ```
 By default, the server spawns a page on `http://localhost:8080`. The board will listen on `localhost` for HTTP API requests, and it will spawn its own interface on `http://localhost:8000`. Neither of these are secured with HTTPS, so do not send any sensitive data over this system.
-
