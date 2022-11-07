@@ -1,5 +1,6 @@
 # DECO4200
 Team repository for DECO4200
+Soren Saville Scott, Trang Nguyen, Sajitha Wewegama
 
 This repository stores the source programs for the HouseHub proof of concept interface.
 
